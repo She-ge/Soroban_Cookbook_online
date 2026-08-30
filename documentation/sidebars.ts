@@ -23,6 +23,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/deploy-testnet',
         'getting-started/deploy-mainnet',
         'getting-started/contract-interaction',
+        'getting-started/invoke-host-function',
         'getting-started/debugging',
         'contributing',
         'contributing/add-tested-example',

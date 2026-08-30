@@ -271,6 +271,7 @@ const response = await fetch('/api/contract/invoke', {
 ## Related resources
 
 - [Pattern Library](/docs/patterns/overview) — reusable contract patterns
+- [Transaction Anatomy: Invoking a Contract](./invoke-host-function) — XDR structure and Stellar Lab walkthrough
 - [Deploy to testnet](/docs/getting-started/deploy-testnet)
 - [First contract tutorial](/docs/getting-started/first-contract)
 - [Error handling patterns](/docs/patterns/error-recovery)

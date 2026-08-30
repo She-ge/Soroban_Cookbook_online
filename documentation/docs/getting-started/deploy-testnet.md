@@ -538,9 +538,10 @@ soroban account transactions --account my-testnet-account --network testnet
 Now that your contract is deployed:
 
 1. **Test thoroughly** — Invoke all contract functions and verify behavior
-2. **Monitor events** — Check contract events and logs
-3. **Prepare for mainnet** — [Deploy to Mainnet](/docs/getting-started/deploy-mainnet) when validation is complete
-4. **Learn more** — Explore [Core Concepts](/docs/concepts/overview) and [Patterns](/docs/patterns/overview)
+2. **Understand the transaction** — [Transaction Anatomy: Invoking a Contract](./invoke-host-function) — see the XDR and op structure the CLI builds for you
+3. **Monitor events** — Check contract events and logs
+4. **Prepare for mainnet** — [Deploy to Mainnet](/docs/getting-started/deploy-mainnet) when validation is complete
+5. **Learn more** — Explore [Core Concepts](/docs/concepts/overview) and [Patterns](/docs/patterns/overview)
 
 ## Additional Resources
 
