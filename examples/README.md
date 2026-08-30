@@ -41,6 +41,7 @@ Contracts build to the shared workspace target directory,
 | [`htlc-swap`](htlc-swap/README.md) | Hashed Timelock Contract (HTLC) Swap | [Pattern Library](https://soroban-cookbook.dev/docs/patterns/overview) |
 | [`multisig-wallet`](multisig-wallet/README.md) | Multisig Wallet | [Authorization](https://soroban-cookbook.dev/docs/concepts/authorization) |
 | [`oracle-consumer`](oracle-consumer/README.md) | Oracle Consumer | [Oracle Consumer Pattern](https://soroban-cookbook.dev/docs/patterns/oracle-consumer) |
+| [`pagination`](pagination/README.md) | Cursor-Based Pagination for Vec and Map Collections | [Gas and Resources](https://soroban-cookbook.dev/docs/concepts/gas-and-resources) |
 | [`reentrancy-guard`](reentrancy-guard/README.md) | Reentrancy Guard | [Reentrancy Guard Pattern](https://soroban-cookbook.dev/docs/patterns/reentrancy-guard) |
 | [`simple-dao`](simple-dao/README.md) | Simple DAO | [Proposal Lifecycle](https://soroban-cookbook.dev/docs/patterns/proposal-lifecycle) |
 | [`simple-voting`](simple-voting/README.md) | Simple Voting | [Proposal Lifecycle](https://soroban-cookbook.dev/docs/patterns/proposal-lifecycle) |
