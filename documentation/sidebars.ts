@@ -23,6 +23,8 @@ const sidebars: SidebarsConfig = {
         'getting-started/deploy-testnet',
         'getting-started/deploy-mainnet',
         'getting-started/contract-interaction',
+        'getting-started/js-sdk',
+        'getting-started/api-security',
         'getting-started/debugging',
         'contributing',
         'contributing/add-tested-example',
