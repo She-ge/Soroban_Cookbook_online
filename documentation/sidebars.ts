@@ -55,6 +55,7 @@ const sidebars: SidebarsConfig = {
         'concepts/gas-and-resources',
         'concepts/cross-contract-invocation',
         'concepts/randomness',
+        'concepts/contract-ids',
       ],
     },
     {

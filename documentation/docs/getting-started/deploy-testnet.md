@@ -174,6 +174,8 @@ Contract ID: CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSC4
 
 **Save your Contract ID** - You'll need it for all future interactions with this contract.
 
+This ID isn't random — it's deterministically derived from your source account and an internal deploy salt, which is why redeploying with the same account and salt on the same network always reproduces the same address. See [Contract IDs & Deploy Salt](/docs/concepts/contract-ids) if you need to predict a contract's address before deploying it (for example, to add it to an allowlist in advance).
+
 ### Store Contract ID for Later Use
 
 Save the contract ID to an environment variable for convenience:
