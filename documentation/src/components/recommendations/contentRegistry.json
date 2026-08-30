@@ -203,9 +203,11 @@
     "status": "stable",
     "time": 10,
     "tags": [
+      "auth",
       "storage",
+      "events",
       "optimization",
-      "errors"
+      "tokens"
     ],
     "href": "/docs/concepts/gas-and-resources"
   },

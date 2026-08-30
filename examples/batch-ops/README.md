@@ -47,6 +47,7 @@ See [Deploy to Testnet](https://soroban-cookbook.dev/docs/getting-started/deploy
 
 ## Related documentation
 
-- [Gas and Resources](https://soroban-cookbook.dev/docs/concepts/gas-and-resources) — the pattern page this example supports
+- [Gas and Resources](https://soroban-cookbook.dev/docs/concepts/gas-and-resources) — conceptual guide featuring `batch-ops` as an instruction count case study at resource limits
+- [Optimization Playbook](https://soroban-cookbook.dev/docs/patterns/optimization-playbook) — systematic gas optimization techniques
 - [Pattern Library](https://soroban-cookbook.dev/docs/patterns/overview) — every documented pattern
 - [Adding a Tested Example](https://soroban-cookbook.dev/docs/contributing/add-tested-example) — how these crates are structured
