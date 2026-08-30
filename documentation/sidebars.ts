@@ -78,6 +78,7 @@ const sidebars: SidebarsConfig = {
         'patterns/reentrancy-guard',
         'patterns/streaming-payments',
         'patterns/contract-registry',
+        'patterns/soulbound-token',
       ],
     },
     {

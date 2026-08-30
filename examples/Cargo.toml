@@ -29,5 +29,6 @@ members = [
     "upgradeable",
     "multi-token-vault",
     "multisig-wallet",
+    "soulbound-token",
 ]
 resolver = "2"
