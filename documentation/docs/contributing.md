@@ -268,4 +268,5 @@ If you're stuck, feel free to:
 
 - [Internal Linking Strategy](/docs/contributing/internal-linking) — how we structure cross-links for SEO and navigation
 - [Adding a Tested Code Example](/docs/contributing/add-tested-example) — contribute verified examples
+- [Reviewing Soroban Test Snapshots](/docs/contributing/soroban-test-snapshots) — regenerate and review SDK-generated test fixtures
 - [Pattern Library](/docs/patterns/overview) — where new patterns are catalogued

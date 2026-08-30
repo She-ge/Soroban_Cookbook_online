@@ -26,6 +26,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/debugging',
         'contributing',
         'contributing/add-tested-example',
+        'contributing/soroban-test-snapshots',
         'contributing/analytics-events',
         'contributing/versioning-strategy',
       ],
