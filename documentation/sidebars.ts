@@ -76,6 +76,7 @@ const sidebars: SidebarsConfig = {
         'patterns/lifecycle-upgrades',
         'patterns/proposal-lifecycle',
         'patterns/reentrancy-guard',
+        'patterns/flash-loan',
         'patterns/streaming-payments',
         'patterns/contract-registry',
       ],
