@@ -19,6 +19,7 @@ members = [
     "simple-dao",
     "simple-voting",
     "staking",
+    "storage-ttl",
     "stream-payment",
     "timelock-vault",
     "token-snapshot",
