@@ -76,6 +76,7 @@ const sidebars: SidebarsConfig = {
         'patterns/examples-index',
         'patterns/hello-world',
         'patterns/basic-token',
+        'patterns/token-wrapper',
         'patterns/token-snapshot',
         'patterns/custom-types',
         'patterns/token-standards',
