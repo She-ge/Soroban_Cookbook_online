@@ -143,6 +143,11 @@
       "minInternalLinks": 2,
       "requiredLinks": ["/docs/patterns/optimization-playbook"]
     },
+    "concepts/simulation-and-footprints": {
+      "category": "concepts",
+      "minInternalLinks": 2,
+      "requiredLinks": ["/docs/getting-started/contract-interaction", "/docs/concepts/gas-and-resources"]
+    },
     "concepts/error-handling": {
       "category": "concepts",
       "minInternalLinks": 2,
