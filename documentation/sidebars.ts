@@ -73,6 +73,7 @@ const sidebars: SidebarsConfig = {
       label: 'Patterns',
       items: [
         'patterns/overview',
+        'patterns/examples-index',
         'patterns/hello-world',
         'patterns/basic-token',
         'patterns/token-snapshot',

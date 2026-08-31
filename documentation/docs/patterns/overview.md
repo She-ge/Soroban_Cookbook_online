@@ -136,6 +136,10 @@ Build essential utility contracts for multi-signature wallets, escrow, and fund 
 
 Some patterns also include deployment guidance, state migration strategies, and optimization techniques. The [hello world storage](/docs/patterns/hello-world) pattern demonstrates the standard pattern page layout and can be used as a template when adding new patterns.
 
+## Examples Index
+
+Browse the [Examples Index](/docs/patterns/examples-index) for a complete list of all example crates with their difficulty levels and pattern documentation status.
+
 Browse the [Available Patterns](/docs/patterns/overview) to find the right pattern for your use case.
 
 ## Contributing
