@@ -794,6 +794,15 @@
       "storage",
       "optimization"
     ],
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "optimization"
+    ],
     "title": "Local Testing and Simulation",
     "description": "This page has moved to the canonical local testing guide and redirects to the shared simulation workflow.",
     "category": "getting-started",
@@ -957,6 +966,26 @@
       "tokens"
     ],
     "href": "/docs/patterns/basic-token"
+  },
+  {
+    "id": "patterns/batch-operations",
+    "title": "batch-operations",
+    "description": "Soroban tutorial on batch-operations.",
+    "category": "patterns",
+    "difficulty": "intermediate",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "optimization",
+      "authorization",
+      "storage",
+      "auth",
+      "events",
+      "errors",
+      "tokens",
+      "upgrade"
+    ],
+    "href": "/docs/patterns/batch-operations"
   },
   {
     "id": "patterns/contract-factory",

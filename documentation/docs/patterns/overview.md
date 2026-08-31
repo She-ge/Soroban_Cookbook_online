@@ -52,6 +52,12 @@ Token staking with pro-rata reward distribution over epocs. Demonstrates lazy re
 
 Hash-time-locked contract for cross-party atomic swaps. Demonstrates hashlock, timelock, and refund mechanisms for trustless exchanges.
 
+### [Batch Operations](/docs/patterns/batch-operations)
+
+**Difficulty**: Intermediate | **Category**: Architecture | **Status**: Stable
+
+Bound caller-controlled batches, amortize shared authorization and storage work, test the exact 20-operation limit, and size the guard against measured instruction and resource usage.
+
 ## Pattern Categories
 
 ### 🔺 [Token Standards](/patterns/tokens)

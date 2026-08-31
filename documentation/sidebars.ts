@@ -85,6 +85,7 @@ const sidebars: SidebarsConfig = {
         'patterns/escrow-multiparty',
         'patterns/escrow-basic',
         'patterns/multi-token-vault',
+        'patterns/batch-operations',
         'patterns/optimization-playbook',
         'patterns/lifecycle-upgrades',
         'patterns/proposal-lifecycle',
