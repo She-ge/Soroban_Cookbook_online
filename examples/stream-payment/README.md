@@ -8,6 +8,7 @@ A linear token streaming contract with withdrawable balance over time on Soroban
 - Partial and repeat withdrawals by the stream recipient
 - Integration with Stellar Asset Contract (SAC) token transfers
 - Complete input validation, timestamp bounds checking, and error handling
+A contract for streaming payments over time.
 
 ## Build
 
@@ -44,3 +45,8 @@ See [Deploy to Testnet](https://soroban-cookbook.dev/docs/getting-started/deploy
 - [Streaming Payments Pattern](https://soroban-cookbook.dev/docs/patterns/streaming-payments) — the pattern page this example supports
 - [Pattern Library](https://soroban-cookbook.dev/docs/patterns/overview) — every documented pattern
 - [Adding a Tested Example](https://soroban-cookbook.dev/docs/contributing/add-tested-example) — how these crates are structured
+## Test
+
+```bash
+cargo test --manifest-path examples/stream-payment/Cargo.toml
+```

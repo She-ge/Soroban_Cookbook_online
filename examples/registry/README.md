@@ -8,6 +8,9 @@ A contract registry / name service that maps stable byte names to contract addre
 - Address resolution and contract lookup
 - Registry initialization and lifecycle management
 - Structured error handling with `contracterror`
+# Registry
+
+A registry contract.
 
 ## Build
 
@@ -44,3 +47,8 @@ See [Deploy to Testnet](https://soroban-cookbook.dev/docs/getting-started/deploy
 - [Contract Registry Pattern](https://soroban-cookbook.dev/docs/patterns/contract-registry) — the pattern page this example supports
 - [Pattern Library](https://soroban-cookbook.dev/docs/patterns/overview) — every documented pattern
 - [Adding a Tested Example](https://soroban-cookbook.dev/docs/contributing/add-tested-example) — how these crates are structured
+## Test
+
+```bash
+cargo test --manifest-path examples/registry/Cargo.toml
+```

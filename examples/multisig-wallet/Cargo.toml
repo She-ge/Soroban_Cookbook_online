@@ -2,12 +2,14 @@
 name = "multisig-wallet"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example multisig wallet where proposals require signer approvals before execution."
+keywords = ["soroban", "example", "multisig-wallet"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-soroban-sdk = { version = "27.0.3", features = ["testutils"] }
+soroban-sdk = "27.0.3"
 
 [dev-dependencies]
 soroban-sdk = { version = "27.0.3", features = ["testutils"] }

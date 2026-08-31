@@ -2,12 +2,14 @@
 name = "token-snapshot"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example token that supports balance snapshots for off-chain indexing."
+keywords = ["soroban", "example", "token-snapshot"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-soroban-sdk = { version = "27.0.3", features = ["testutils"] }
+soroban-sdk = "27.0.3"
 
 [dev-dependencies]
 soroban-sdk = { version = "27.0.3", features = ["testutils"] }
