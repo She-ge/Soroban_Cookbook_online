@@ -9,27 +9,31 @@ description: Overview of essential tools, IDE extensions, testing frameworks, an
 
 This guide provides an overview of the essential tools needed for Soroban smart contract development, including command-line interfaces, IDE extensions, debugging utilities, testing frameworks, and deployment/monitoring tools.
 
-## Soroban CLI
+## Stellar CLI
 
-The [Soroban CLI](https://developers.stellar.org/docs/tools/developer-tools/cli/soroban-cli) is the primary tool for building, testing, and deploying Soroban smart contracts.
+The [Stellar CLI](https://developers.stellar.org/docs/tools/developer-tools/cli/stellar-cli) (`stellar`) is the official, unified command-line tool for building, testing, deploying, and interacting with Soroban smart contracts and the Stellar network.
 
 ### Key Features
-- **Project Initialization**: Easily scaffold new projects (`soroban contract init`).
-- **Compilation**: Compile Rust code into WebAssembly (`soroban contract build`).
-- **Deployment**: Deploy contracts to local, testnet, or mainnet networks (`soroban contract deploy`).
-- **Invocation**: Interact with deployed contracts directly from the terminal (`soroban contract invoke`).
+- **Project Initialization**: Easily scaffold new projects (`stellar contract init`).
+- **Compilation & Optimization**: Compile Rust code into optimized WebAssembly (`stellar contract build`).
+- **Deployment**: Deploy contracts to local sandbox, testnet, or mainnet networks (`stellar contract deploy`).
+- **Invocation**: Interact with deployed contracts directly from the terminal (`stellar contract invoke`).
+- **Key Management**: Securely create and manage keypairs and identities (`stellar keys generate`, `stellar keys fund`).
 
 **Usage Example:**
 ```bash
 # Build the contract
-soroban contract build
+stellar contract build
 
 # Deploy to Testnet
-soroban contract deploy \
+stellar contract deploy \
   --wasm target/wasm32-unknown-unknown/release/contract.wasm \
   --source admin \
   --network testnet
 ```
+
+> [!TIP]
+> For a full side-by-side command translation from older `soroban-cli` tooling, see the [Stellar CLI Migration Guide](./stellar-cli-migration.md).
 
 ## IDE Extensions and Plugins
 
@@ -47,7 +51,7 @@ For the best development experience, we recommend using [Visual Studio Code (VS 
 When things don't work as expected, you need the right tools to identify the issue:
 
 - **Cargo Toolchain**: Use `cargo check` and `cargo clippy` to catch syntax and logic errors early.
-- **Soroban CLI Inspect**: Use `soroban contract inspect` to view contract metadata and storage.
+- **Stellar CLI Inspect**: Use `stellar contract inspect` to view contract metadata, functions, and storage specs.
 - **Detailed Logs**: Append the `--verbose` flag during CLI invocations to get extended logs and stack traces.
 
 For a deeper dive into debugging workflows and techniques, please see our comprehensive [Debugging Guide](./debugging.md).
@@ -74,7 +78,7 @@ For more details, refer to the [Contract Testing Guide](./contract-testing.md).
 
 After developing and testing your contract, you have several options for deployment:
 
-- **Soroban CLI**: As mentioned above, the primary tool for deploying to any network.
+- **Stellar CLI**: As mentioned above, the primary tool for deploying to any network.
 - **Stellar Laboratory**: The [Stellar Laboratory](https://laboratory.stellar.org/) is a web-based tool for creating, signing, and submitting transactions on the Stellar network. It's excellent for manual testing and network interaction.
 - **Freighter Wallet**: For browser-based dApps, [Freighter](https://www.freighter.app/) is a non-custodial wallet extension that allows users to securely sign deployment or invocation transactions.
 
@@ -93,9 +97,9 @@ Monitoring your contracts post-deployment is crucial. Use network explorers to t
 | Task | Recommended Tool | Alternative |
 |------|------------------|-------------|
 | **Code Editing** | VS Code + rust-analyzer | IntelliJ Rust |
-| **Compilation** | Cargo / Soroban CLI | - |
+| **Compilation** | Cargo / Stellar CLI | - |
 | **Local Testing** | Cargo Test | Local Sandbox Network |
-| **Deployment** | Soroban CLI | Stellar Laboratory |
+| **Deployment** | Stellar CLI | Stellar Laboratory |
 | **Monitoring** | Stellar Expert | Custom RPC Scripts |
 
 ---
