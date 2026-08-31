@@ -76,6 +76,7 @@ impl ConstantProductAmm {
     /// panic message rather than a bare unwrap in case a future call path
     /// reaches them pre-initialisation.
     fn get_reserves_internal(env: &Env) -> Reserves {
+        env.storage().persistent().get(&DataKey::Reserves).unwrap()
         match env.storage().persistent().get(&DataKey::Reserves) {
             Some(reserves) => reserves,
             None => panic!("constant-product-amm: reserves not initialized"),

@@ -310,6 +310,14 @@ mod tests {
 
     fn funded(amount: i128) -> (Env, Actors, EscrowMultipartyClient<'static>) {
         let (env, actors, client) = setup();
+        client
+            .deposit(
+                &actors.depositor,
+                &actors.recipient,
+                &actors.arbitrator,
+                &amount,
+            )
+            .expect("deposit failed");
         client.deposit(
             &actors.depositor,
             &actors.recipient,

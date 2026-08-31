@@ -223,6 +223,7 @@ impl TokenSnapshot {
         // Walk every known holder and persist their balance under the
         // snapshot-scoped key.
         for i in 0..holder_count {
+            let holder: Address = env.storage().persistent().get(&DataKey::Holder(i)).unwrap();
             // Every index below the holder counter must have a recorded address;
             // if the counter and the records ever desync, surface a clear panic
             // instead of a bare unwrap.

@@ -332,6 +332,9 @@ mod tests {
     use super::*;
     use soroban_sdk::{
         symbol_short,
+        testutils::Address as _,
+        token::{self, StellarAssetClient},
+        Address, Env, Val,
         testutils::{Address as _, Events as _},
         token::{self, StellarAssetClient},
         Address, Env,
@@ -533,6 +536,21 @@ mod tests {
     #[test]
     fn test_release_emits_event() {
         let (env, buyer, _seller, _arbiter, _token, client) = setup();
+        client.deposit().unwrap();
+
+        let before = env.events().all().len();
+        client.release(&buyer).unwrap();
+
+        let events = env.events().all();
+        assert!(events.len() > before);
+        let released: Vec<_> = events
+            .iter()
+            .filter(|e| {
+                e.1.iter()
+                    .any(|v| *v == Val::from(symbol_short!("release")))
+            })
+            .collect();
+        assert_eq!(released.len(), 1);
         client.deposit();
 
         client.release(&buyer);

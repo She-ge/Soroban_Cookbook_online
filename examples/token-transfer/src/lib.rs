@@ -199,6 +199,9 @@ impl TokenTransfer {
         env.storage().persistent().get(&key).unwrap_or(0)
     }
 
+    /// Return the token name.
+    pub fn name(env: Env) -> String {
+        env.storage().persistent().get(&DataKey::Name).unwrap()
     /// Return the token name. Panics if the token is not initialised (these
     /// metadata fields are only written by `initialize`).
     pub fn name(env: Env) -> String {
@@ -210,6 +213,7 @@ impl TokenTransfer {
 
     /// Return the token symbol. Panics if the token is not initialised.
     pub fn symbol(env: Env) -> String {
+        env.storage().persistent().get(&DataKey::Symbol).unwrap()
         match env.storage().persistent().get(&DataKey::Symbol) {
             Some(symbol) => symbol,
             None => panic!("token-transfer: token not initialised (no symbol)"),
@@ -219,6 +223,7 @@ impl TokenTransfer {
     /// Return the number of decimals used by the token. Panics if the token is
     /// not initialised.
     pub fn decimals(env: Env) -> u32 {
+        env.storage().persistent().get(&DataKey::Decimals).unwrap()
         match env.storage().persistent().get(&DataKey::Decimals) {
             Some(decimals) => decimals,
             None => panic!("token-transfer: token not initialised (no decimals)"),
@@ -716,6 +721,19 @@ mod tests {
         let bob = Address::generate(&env);
 
         client.mint(&alice, &1000);
+        let before = env.events().all().len();
+        client.transfer(&alice, &bob, &400).unwrap();
+
+        let events = env.events().all();
+        assert!(events.len() > before);
+        let transferred: Vec<_> = events
+            .iter()
+            .filter(|e| {
+                e.1.iter()
+                    .any(|v| *v == Val::from(symbol_short!("transfer")))
+            })
+            .collect();
+        assert_eq!(transferred.len(), 1);
         client.transfer(&alice, &bob, &400);
 
         // `.all()` exposes only the most recent invocation's events.

@@ -308,6 +308,22 @@ jobs:
       - name: Build every example to wasm32v1-none (release)
         run: bash scripts/build-examples-wasm.sh
 
+  rustfmt:
+    name: Rust Format Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install Rust stable (with rustfmt)
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt
+
+      - name: Check Rust formatting for all examples
+        working-directory: examples
+        run: cargo fmt --all -- --check
+
   lint-contracts:
     name: Lint Contract Code
     runs-on: ubuntu-latest
@@ -513,6 +529,7 @@ jobs:
   summary:
     name: CI Summary
     runs-on: ubuntu-latest
+    needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, rustfmt, lint-contracts, e2e-console, e2e-smoke]
     needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, wasm-build-examples, lint-contracts, e2e-console, e2e-smoke]
     needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, lint-contracts, e2e-console, e2e-smoke, coverage]
     if: always()
@@ -545,6 +562,10 @@ jobs:
           fi
           if [ "${{ needs.e2e-smoke.result }}" != "success" ]; then
             echo "❌ Playwright core tests (smoke, a11y, navigation) failed"
+            exit 1
+          fi
+          if [ "${{ needs.rustfmt.result }}" != "success" ]; then
+            echo "❌ Rust format check failed"
             exit 1
           fi
           if [ "${{ needs.lint-contracts.result }}" != "success" ]; then

@@ -1,6 +1,52 @@
 #![cfg(test)]
 
 use soroban_sdk::{
+    contract, contractimpl, contracttype, testutils::Address as _, token::TokenClient, Address,
+    Env, Vec,
+};
+
+use crate::{MultisigWallet, MultisigWalletClient, TransferProposal, WalletError};
+
+#[contracttype]
+#[derive(Clone)]
+enum TestTokenDataKey {
+    Balance(Address),
+}
+
+#[contract]
+struct TestToken;
+
+#[contractimpl]
+impl TestToken {
+    pub fn balance(env: Env, id: Address) -> i128 {
+        env.storage()
+            .persistent()
+            .get(&TestTokenDataKey::Balance(id))
+            .unwrap_or(0)
+    }
+
+    pub fn transfer(env: Env, from: Address, to: Address, amount: i128) -> i128 {
+        from.require_auth();
+        let from_key = TestTokenDataKey::Balance(from.clone());
+        let from_bal: i128 = env.storage().persistent().get(&from_key).unwrap_or(0);
+        if from_bal < amount {
+            panic!("insufficient balance");
+        }
+        let to_key = TestTokenDataKey::Balance(to.clone());
+        let to_bal: i128 = env.storage().persistent().get(&to_key).unwrap_or(0);
+        env.storage()
+            .persistent()
+            .set(&from_key, &(from_bal - amount));
+        env.storage().persistent().set(&to_key, &(to_bal + amount));
+        from_bal - amount
+    }
+
+    pub fn mint(env: Env, to: Address, amount: i128) {
+        let key = TestTokenDataKey::Balance(to.clone());
+        let bal: i128 = env.storage().persistent().get(&key).unwrap_or(0);
+        env.storage().persistent().set(&key, &(bal + amount));
+    }
+}
     testutils::Address as _,
     token::{StellarAssetClient, TokenClient},
     Address, Env, Vec,
