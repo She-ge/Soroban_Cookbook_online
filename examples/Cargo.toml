@@ -6,6 +6,7 @@ members = [
     "constant-product-amm",
     "contract-factory",
     "counter",
+    "cross-contract",
     "emergency-stop",
     "error-handling",
     "escrow-basic",

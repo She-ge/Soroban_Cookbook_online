@@ -6,7 +6,7 @@
 //! - Reentrancy protection through proper state management
 //! - Fallback mechanisms for external contract failures
 
-use soroban_sdk::{contract, contractimpl, contracttype, Address, Env, Symbol};
+use soroban_sdk::{contract, contracterror, contractimpl, contracttype, Address, Env, Symbol};
 use crate::token::{TokenClient, TokenError};
 
 #[derive(Clone)]
@@ -18,8 +18,9 @@ pub enum DataKey {
     EmergencyMode,
 }
 
-#[contracttype]
-#[derive(Clone, Debug, Eq, PartialEq)]
+#[contracterror]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, PartialOrd, Ord)]
+#[repr(u32)]
 pub enum VaultError {
     /// Contract not initialized
     NotInitialized = 1,
@@ -58,6 +59,8 @@ impl Vault {
     /// Deposit tokens into the vault
     /// Demonstrates proper state management before cross-contract calls
     pub fn deposit(env: Env, from: Address, amount: i128) -> Result<(), VaultError> {
+        from.require_auth();
+
         if amount <= 0 {
             return Err(VaultError::InvalidAmount);
         }
@@ -87,8 +90,8 @@ impl Vault {
                     (from, amount)
                 );
                 Ok(())
-            },
-            Ok(Err(_token_error)) | Err(_host_error) => {
+            }
+            Ok(Err(_)) | Err(_) => {
                 // Revert the state change since the token transfer failed
                 env.storage().persistent().set(&DataKey::UserBalance(from), &current_balance);
                 Err(VaultError::ExternalCallFailed)
@@ -132,8 +135,8 @@ impl Vault {
                     (to, amount)
                 );
                 Ok(())
-            },
-            Ok(Err(_token_error)) | Err(_host_error) => {
+            }
+            Ok(Err(_)) | Err(_) => {
                 // Revert the balance change
                 env.storage().persistent().set(&DataKey::UserBalance(to), &current_balance);
                 Err(VaultError::ExternalCallFailed)
@@ -173,13 +176,16 @@ impl Vault {
         match token_client.try_risky_operation(&should_fail) {
             Ok(Ok(result)) => Ok(result),
             Ok(Err(_contract_error)) => {
-                // Contract returned an error - handle gracefully
-                Ok(-1) // Fallback value
+                // Contract-level failure is recoverable and should fall back to the safe default.
+                env.storage().instance().set(&DataKey::EmergencyMode, &true);
+                Ok(-1)
             },
             Err(_host_error) => {
-                // Host-level error (panic, budget, etc.) - enable emergency mode
+                // Both contract-level and host-level failure modes are treated as
+                // recoverable here: the vault falls back to a safe default and enables
+                // emergency mode instead of propagating the failure.
                 env.storage().instance().set(&DataKey::EmergencyMode, &true);
-                Err(VaultError::ExternalCallFailed)
+                Ok(-1)
             }
         }
     }

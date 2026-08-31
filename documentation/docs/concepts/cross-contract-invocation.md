@@ -367,6 +367,13 @@ When a cross-contract call fails unexpectedly:
 4. **Verify arguments** — serialisation mismatches are silent. Add `println!` or event emissions in the callee during development.
 5. **Review authorisation** — a missing `require_auth` call or wrong signer is the most common cause of silent authorisation failures.
 
+## Example layout
+
+A runnable multi-contract example is available in the repository:
+
+- [Cross-Contract Vault Pattern](../patterns/cross-contract.mdx) — token + vault + test layout, auth flow, and how to run the suite
+- [examples/cross-contract](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/cross-contract) — the deployed code used by the pattern page
+
 ## Next steps
 
 - [Authorization](./authorization.md) — how `require_auth` works and how to propagate it across contracts
@@ -374,3 +381,4 @@ When a cross-contract call fails unexpectedly:
 - [Gas and Resource Management](./gas-and-resources.md) — budget impact of cross-contract calls
 - [Security Fundamentals](../security/fundamentals.md) — reentrancy, access control, and safe patterns
 - [Error Recovery Pattern](../patterns/error-recovery.mdx) — fallback logic and graceful degradation
+- [Cross-Contract Vault Pattern](../patterns/cross-contract.mdx) — end-to-end example using token + vault + tests
