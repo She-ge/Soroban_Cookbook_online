@@ -14,6 +14,7 @@ members = [
     "hello-world",
     "htlc-swap",
     "oracle-consumer",
+    "price-oracle",
     "reentrancy-guard",
     "registry",
     "simple-dao",
