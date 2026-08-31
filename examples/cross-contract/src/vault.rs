@@ -19,6 +19,8 @@ pub enum DataKey {
     EmergencyMode,
 }
 
+#[contracterror]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, PartialOrd, Ord)]
 
 #[contracterror]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -68,6 +70,8 @@ impl Vault {
     /// Deposit tokens into the vault
     /// Demonstrates proper state management before cross-contract calls
     pub fn deposit(env: Env, from: Address, amount: i128) -> Result<(), VaultError> {
+        from.require_auth();
+
         if amount <= 0 {
             return Err(VaultError::InvalidAmount);
         }
@@ -103,6 +107,7 @@ impl Vault {
                     (from, amount),
                 );
                 Ok(())
+            }
             },
             Ok(Err(_)) | Err(_) => {
                 // Revert the state change since the token transfer failed
@@ -168,6 +173,7 @@ impl Vault {
                     (to, amount),
                 );
                 Ok(())
+            }
             },
             Ok(Err(_)) | Err(_) => {
                 // Revert the balance change
@@ -231,13 +237,19 @@ impl Vault {
         match token_client.try_risky_operation(&should_fail) {
             Ok(Ok(result)) => Ok(result),
             Ok(Err(_contract_error)) => {
+                // Contract-level failure is recoverable and should fall back to the safe default.
+                env.storage().instance().set(&DataKey::EmergencyMode, &true);
+                Ok(-1)
+            },
                 // Contract returned an error - handle gracefully
                 Ok(-1) // Fallback value
             }
             Err(_host_error) => {
-                // Host-level error (panic, budget, etc.) - enable emergency mode
+                // Both contract-level and host-level failure modes are treated as
+                // recoverable here: the vault falls back to a safe default and enables
+                // emergency mode instead of propagating the failure.
                 env.storage().instance().set(&DataKey::EmergencyMode, &true);
-                Err(VaultError::ExternalCallFailed)
+                Ok(-1)
             }
         }
     }

@@ -14,6 +14,8 @@ pub enum DataKey {
     Admin,
 }
 
+#[contracterror]
+#[derive(Clone, Copy, Debug, Eq, PartialEq, PartialOrd, Ord)]
 
 #[contracterror]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
@@ -54,6 +56,9 @@ impl Token {
 
         let balance = Self::balance(env.clone(), to.clone());
         let new_balance = balance + amount;
+
+        env.storage().persistent().set(&DataKey::Balance(to.clone()), &new_balance);
+
         
         env.storage().persistent().set(&DataKey::Balance(to.clone()), &new_balance);
         
@@ -96,6 +101,8 @@ impl Token {
         let to_balance = Self::balance(env.clone(), to.clone());
 
         // Update balances
+        env.storage().persistent().set(&DataKey::Balance(from.clone()), &(from_balance - amount));
+        env.storage().persistent().set(&DataKey::Balance(to.clone()), &(to_balance + amount));
         env.storage()
             .persistent()
             .set(&DataKey::Balance(from.clone()), &(from_balance - amount));
@@ -130,10 +137,11 @@ impl Token {
         env.storage().instance().get(&DataKey::Admin).unwrap()
     }
 
-    /// Simulate a contract that might fail unpredictably
+    /// Simulate a contract that fails with a normal contract error so the caller can
+    /// recover using try_* without escalating into a host panic.
     pub fn risky_operation(env: Env, should_fail: bool) -> Result<i128, TokenError> {
         if should_fail {
-            panic!("Simulated contract failure");
+            return Err(TokenError::Unauthorized);
         }
 
         // Return some computation

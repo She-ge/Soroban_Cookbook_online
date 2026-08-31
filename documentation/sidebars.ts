@@ -84,6 +84,7 @@ const sidebars: SidebarsConfig = {
         'patterns/authorization',
         'patterns/error-handling',
         'patterns/error-recovery',
+        'patterns/cross-contract',
         'patterns/escrow-basic',
         'patterns/escrow-multiparty',
         'patterns/escrow-basic',
