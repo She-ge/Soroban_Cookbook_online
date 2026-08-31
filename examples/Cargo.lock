@@ -436,15 +436,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "custom-account"
-version = "0.1.0"
-dependencies = [
- "ed25519-dalek",
- "rand",
- "soroban-sdk",
-]
-
-[[package]]
 name = "darling"
 version = "0.20.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1753,6 +1744,13 @@ dependencies = [
  "serde_with",
  "sha2",
  "stellar-strkey 0.0.13",
+]
+
+[[package]]
+name = "storage-ttl"
+version = "0.1.0"
+dependencies = [
+ "soroban-sdk",
 ]
 
 [[package]]

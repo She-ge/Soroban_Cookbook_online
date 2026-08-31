@@ -51,6 +51,7 @@ Contracts build to the shared workspace target directory,
 | [`simple-dao`](simple-dao/README.md) | Simple DAO | [Proposal Lifecycle](https://soroban-cookbook.dev/docs/patterns/proposal-lifecycle) |
 | [`simple-voting`](simple-voting/README.md) | Simple Voting | [Proposal Lifecycle](https://soroban-cookbook.dev/docs/patterns/proposal-lifecycle) |
 | [`staking`](staking/README.md) | Staking with Epoch Rewards | [Staking Pattern](https://soroban-cookbook.dev/docs/patterns/staking) |
+| [`storage-ttl`](storage-ttl/README.md) | Storage TTL / Rent | [Storage Patterns](https://soroban-cookbook.dev/docs/concepts/storage) |
 | [`timelock-vault`](timelock-vault/README.md) | Timelock Vault | [Timelock Vault Pattern](https://soroban-cookbook.dev/docs/patterns/timelock-vault) |
 | [`tiny-contract`](tiny-contract/README.md) | Tiny contract for WASM size benchmarking | [Optimization Playbook](https://soroban-cookbook.dev/docs/patterns/optimization-playbook) |
 | [`token-snapshot`](token-snapshot/README.md) | Token Snapshot | [Token Snapshot Pattern](https://soroban-cookbook.dev/docs/patterns/token-snapshot) |
