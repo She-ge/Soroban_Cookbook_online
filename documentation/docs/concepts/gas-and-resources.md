@@ -150,6 +150,10 @@ To ensure your contracts remain within budget and are cost-effective, continuous
      batch_transfer \
      --from <address> \
      --ops '[{"to":"<address>","amount":"100"}]'
+   Before deploying, use the Stellar CLI's `invoke` command with `--simulate`. It returns the exact CPU instructions and memory bytes consumed.
+
+   ```bash
+   stellar contract invoke --id <contract_id> --source <account> --network testnet --simulate -- my_func
    ```
 
    *(Note: Legacy installations can use `soroban contract invoke --cost`)*

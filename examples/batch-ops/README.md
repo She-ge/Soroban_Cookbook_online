@@ -17,13 +17,6 @@ stellar contract build --manifest-path examples/batch-ops/Cargo.toml
 The optimised Wasm is written to
 `examples/target/wasm32-unknown-unknown/release/batch_ops.wasm`.
 
-> **Known issue** — this crate still declares `soroban-sdk = "22.0.0"` while the
-> rest of the examples workspace has moved to `27.0.3`, so it is not listed in
-> `examples/Cargo.toml`. Until that is reconciled, the cargo commands in this
-> README fail with `current package believes it's in a workspace when it's not`.
-> Bumping the SDK requirement and adding `batch-ops` to `workspace.members`
-> resolves it; its 8 tests pass once it is a member.
-
 ## Test
 
 ```bash
