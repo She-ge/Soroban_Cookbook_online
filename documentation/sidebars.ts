@@ -95,6 +95,7 @@ const sidebars: SidebarsConfig = {
         'patterns/proposal-lifecycle',
         'patterns/simple-dao',
         'patterns/reentrancy-guard',
+        'patterns/flash-loan',
         'patterns/staking',
         'patterns/streaming-payments',
         'patterns/timelock-vault',
