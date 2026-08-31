@@ -58,7 +58,11 @@
         "patterns/error-recovery",
         "patterns/optimization-playbook",
         "patterns/lifecycle-upgrades",
-        "patterns/proposal-lifecycle"
+        "patterns/proposal-lifecycle",
+        "patterns/staking",
+        "patterns/timelock-vault",
+        "patterns/contract-factory",
+        "patterns/oracle-consumer"
       ]
     },
     {
