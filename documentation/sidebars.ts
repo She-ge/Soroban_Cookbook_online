@@ -98,6 +98,8 @@ const sidebars: SidebarsConfig = {
       label: 'Security',
       items: ['security/fundamentals', 'security/governance', 'security/defi-patterns', 'security/upgrade-checklist'],
     },
+  ],
+  internalSidebar: [
     {
       type: 'category',
       label: 'Design System',

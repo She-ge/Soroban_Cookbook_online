@@ -522,6 +522,10 @@ const config: Config = {
               label: 'Documentation',
               to: '/',
             },
+            {
+              label: 'Internal Docs',
+              to: '/docs/design-system/buttons',
+            },
           ],
         },
         {
