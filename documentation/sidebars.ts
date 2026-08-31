@@ -66,6 +66,7 @@ const sidebars: SidebarsConfig = {
         'concepts/simulation-and-footprints',
         'concepts/cross-contract-invocation',
         'concepts/randomness',
+        'concepts/contract-ids',
         'concepts/testing-strategies',
         'concepts/token-standards',
       ],
