@@ -10,6 +10,7 @@ publish = false
 crate-type = ["cdylib"]
 
 [dependencies]
+soroban-sdk = "22.0.0"
 soroban-sdk = { version = "27.0.3", features = ["testutils"] }
 
 [dev-dependencies]
