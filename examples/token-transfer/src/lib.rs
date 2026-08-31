@@ -134,11 +134,14 @@ pub fn initialize(
             return Err(Error::InvalidAmount);
         }
 
-        let key = DataKey::Allowance(owner, spender);
+        let key = DataKey::Allowance(owner.clone(), spender.clone());
+
+        // Update the allowance in persistent storage
         env.storage().persistent().set(&key, &amount);
 
+        // Emit an event for the approval
         env.events().publish(
-            (symbol_short!("approve"), owner.clone(), spender.clone()),
+            (symbol_short!("approve"), owner, spender),
             amount,
         );
 
