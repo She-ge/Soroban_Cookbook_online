@@ -46,6 +46,12 @@ Comprehensive error handling patterns including Result types, fallback logic, gr
 
 Token staking with pro-rata reward distribution over epochs. Demonstrates lazy reward computation, epoch-based accounting, and efficient O(1) per-user storage without batch operations.
 
+### [Batch Operations](/docs/patterns/batch-operations)
+
+**Difficulty**: Intermediate | **Category**: Architecture | **Status**: Stable
+
+Bound caller-controlled batches, amortize shared authorization and storage work, test the exact 20-operation limit, and size the guard against measured instruction and resource usage.
+
 ## Pattern Categories
 
 ### 🪙 [Token Standards](/patterns/tokens)
