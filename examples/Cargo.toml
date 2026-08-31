@@ -29,5 +29,6 @@ members = [
     "upgradeable",
     "multi-token-vault",
     "multisig-wallet",
+    "ttl-bumper",
 ]
 resolver = "2"
