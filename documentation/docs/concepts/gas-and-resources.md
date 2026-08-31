@@ -91,11 +91,11 @@ To ensure your contracts remain within budget and are cost-effective, continuous
 
 ### Practical Recommendations
 
-1. **Use Soroban CLI for Cost Estimation:**
-   Before deploying, use the Soroban CLI's `invoke` command. It returns the exact CPU instructions and memory bytes consumed.
+1. **Use Stellar CLI for Cost Estimation:**
+   Before deploying, use the Stellar CLI's `invoke` command with `--simulate`. It returns the exact CPU instructions and memory bytes consumed.
 
    ```bash
-   soroban contract invoke --id <contract_id> --source <account> --network testnet -- --function my_func
+   stellar contract invoke --id <contract_id> --source <account> --network testnet --simulate -- my_func
    ```
 
    _Look for the `cost` output in the transaction result to identify if operations are nearing limits._

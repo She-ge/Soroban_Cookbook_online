@@ -7,6 +7,8 @@ A two-token automated market maker using the `x * y = k` invariant, with liquidi
 - Constant-product pricing and reserve bookkeeping
 - LP share minting and burning proportional to pooled liquidity
 - Moving real tokens with the SDK `token` client
+- A rounding policy (floor division, pool-favoring) that keeps the `x * y = k` invariant from ever decreasing across a swap
+- A property test (`test_invariant_never_decreases_across_swaps`) that exercises the invariant over 200 pseudo-randomly generated swaps using a fixed-seed PRNG, so the run is deterministic without an external fuzzing dependency
 
 ## Build
 
