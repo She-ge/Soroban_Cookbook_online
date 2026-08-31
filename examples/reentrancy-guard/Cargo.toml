@@ -2,6 +2,8 @@
 name = "reentrancy-guard"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example illustrating a reentrancy vulnerability and its guarded (checks-effects) counterpart."
+keywords = ["soroban", "example", "reentrancy-guard"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

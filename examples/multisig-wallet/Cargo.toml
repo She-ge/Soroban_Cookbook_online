@@ -2,6 +2,8 @@
 name = "multisig-wallet"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example multisig wallet where proposals require signer approvals before execution."
+keywords = ["soroban", "example", "multisig-wallet"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

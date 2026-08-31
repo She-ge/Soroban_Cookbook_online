@@ -2,6 +2,8 @@
 name = "batch-ops"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example that executes a batch of token transfers in a single call."
+keywords = ["soroban", "example", "batch-ops"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

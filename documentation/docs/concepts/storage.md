@@ -231,6 +231,7 @@ Concrete heuristics:
 
 ## Related resources
 
+- [Storage TTL and State Archival](/docs/concepts/storage-ttl) — managing entry lifetimes and archival costs
 - [Hello World Storage](/docs/patterns/hello-world) — simple instance storage example
 - [Error Recovery](/docs/patterns/error-recovery) — storage usage in resilient smart contracts
 - [Authorization](/docs/concepts/authorization)

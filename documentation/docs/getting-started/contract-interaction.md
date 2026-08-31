@@ -10,6 +10,8 @@ image: /img/soroban-social-card.png
 
 This tutorial shows how to interact with a deployed Soroban contract from both the command line and application contexts. It covers read-only and state-changing calls, argument encoding, frontend integration patterns, and common error cases with fixes.
 
+Under the hood, all state-changing contract invocations use a two-phase lifecycle: the CLI or SDK first performs an off-chain **preflight simulation** to discover the transaction's storage **footprint** and authorization tree, and then submits the signed transaction for on-chain execution. To understand how footprints and auth modes work in depth, see the [Simulation and Footprints](/docs/concepts/simulation-and-footprints) guide.
+
 ## Prerequisites
 
 - Soroban CLI installed ([setup guide](/docs/getting-started/setup))
@@ -261,15 +263,23 @@ const response = await fetch('/api/contract/invoke', {
 - Problem: The frontend sees an HTTP error from the backend.
 - Fix: Check network logs, ensure the backend endpoint is reachable, and confirm `Content-Type: application/json` is set on requests.
 
+### 7. Footprint mismatch / on-chain storage failure
+
+- Problem: The invocation succeeded during simulation but failed on-chain with `HostError: Error(Storage, MissingValue)` or a footprint violation. This occurs when state changes between preflight simulation and on-chain inclusion, causing the contract to access an undeclared storage key.
+- Fix: Re-simulate the transaction against the latest ledger to refresh the footprint and authorization tree, minimize simulation-to-submission latency, and avoid dynamic on-chain key lookups. See [Simulation and Footprints](/docs/concepts/simulation-and-footprints) for details.
+
 ## Best practices
 
 - Use CLI inspection before calling a function to confirm the contract API.
 - Keep signing keys and network credentials on the server, not in browser code.
 - Prefer read-only contract calls for UI state values.
 - Always validate function names and parameter names against contract metadata.
+- Re-simulate transactions immediately before submission to avoid footprint mismatches.
 
 ## Related resources
 
+- [Simulation and Footprints](/docs/concepts/simulation-and-footprints) — understand preflight simulation, footprints, auth modes, and on-chain failures
+- [Wallet integration guide](/docs/getting-started/wallets) — connect Freighter and sign transactions from a dapp
 - [Pattern Library](/docs/patterns/overview) — reusable contract patterns
 - [Deploy to testnet](/docs/getting-started/deploy-testnet)
 - [First contract tutorial](/docs/getting-started/first-contract)

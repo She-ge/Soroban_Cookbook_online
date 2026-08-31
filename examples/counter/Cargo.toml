@@ -3,6 +3,8 @@ license = "MIT"
 name = "counter"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example contract maintaining an incrementable counter in instance storage."
+keywords = ["soroban", "example", "counter"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
