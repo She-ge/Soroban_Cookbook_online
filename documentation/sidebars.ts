@@ -100,6 +100,7 @@ const sidebars: SidebarsConfig = {
         'patterns/contract-factory',
         'patterns/contract-registry',
         'patterns/oracle-consumer',
+        'patterns/oracle-price-source',
         'patterns/token-vesting',
         'patterns/contract-registry',
         'patterns/multisig-wallet',
