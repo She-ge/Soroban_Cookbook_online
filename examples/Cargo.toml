@@ -42,6 +42,7 @@ members = [
     "upgradeable",
     "multi-token-vault",
     "multisig-wallet",
+    "payment-splitter",
     "ttl-bumper",
     "pausable-token",
     "marketplace",
