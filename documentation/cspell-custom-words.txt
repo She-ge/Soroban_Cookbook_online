@@ -1,3 +1,6 @@
+allowHttp
+allowlist
+allowlists
 anonymised
 API
 authorisation
@@ -6,10 +9,12 @@ authorised
 autoplay
 behaviour
 Binaryen
+Blockdaemon
 browsable
 Bun
 CAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABSC
 CABC
+Caddy
 Cargo
 CTOKEN
 CBCOPY
@@ -52,6 +57,7 @@ favourable
 Fira
 FOIT
 footgun
+Freighter
 funder
 funders
 friendbot
@@ -60,6 +66,7 @@ frontends
 frontmatter
 Frontmatter
 fulfilment
+Futurenet
 functools
 GA4
 GBBD
@@ -125,6 +132,7 @@ Prettier
 println
 programm
 proptest
+QuickNode
 React
 reentrancy
 Reentrancy
@@ -168,6 +176,7 @@ unreviewed
 unstaking
 unvalidated
 USERPROFILE
+Vite
 WCAG
 WebAssembly
 wght

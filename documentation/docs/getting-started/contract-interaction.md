@@ -189,7 +189,7 @@ app.listen(3000, () => {
 
 ### Pattern 2: Frontend request to a secure backend
 
-Keep secret keys out of the browser. The frontend sends simple requests and displays the contract result.
+Keep secret keys out of the browser. The frontend sends simple requests and displays the contract result. Browser dapps that let the user sign should use Freighter, not a bundled secret — see [API Security](./api-security.md).
 
 ```js
 async function invokeContract(fn, params) {
@@ -281,6 +281,8 @@ const response = await fetch('/api/contract/invoke', {
 - [Simulation and Footprints](/docs/concepts/simulation-and-footprints) — understand preflight simulation, footprints, auth modes, and on-chain failures
 - [Wallet integration guide](/docs/getting-started/wallets) — connect Freighter and sign transactions from a dapp
 - [Pattern Library](/docs/patterns/overview) — reusable contract patterns
+- [JavaScript SDK](./js-sdk.md) — browser RPC client and Freighter signing
+- [API Security](./api-security.md) — CORS, RPC allowlists, and secrets
 - [Deploy to testnet](/docs/getting-started/deploy-testnet)
 - [First contract tutorial](/docs/getting-started/first-contract)
 - [Error handling patterns](/docs/patterns/error-recovery)
