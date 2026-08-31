@@ -259,15 +259,23 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             examples/target
-          key: cargo-examples-${{ hashFiles('examples/**/Cargo.toml') }}
+          key: cargo-examples-${{ hashFiles('examples/Cargo.lock') }}
           restore-keys: |
             cargo-examples-
+
+      - name: Check Cargo.lock exists
+        run: |
+          if [ ! -f examples/Cargo.lock ]; then
+            echo "❌ examples/Cargo.lock not found — run 'cargo update' inside examples/ and commit the lockfile"
+            exit 1
+          fi
+          echo "✅ examples/Cargo.lock found"
 
       - name: Check every example crate has a README
         run: bash scripts/check-example-readmes.sh
         continue-on-error: true
 
-      - name: Run example tests
+      - name: Run example tests (locked)
         run: bash scripts/test-examples.sh
         continue-on-error: true
 

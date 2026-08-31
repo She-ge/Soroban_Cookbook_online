@@ -72,7 +72,7 @@ for dir in "${EXAMPLE_DIRS[@]}"; do
   # Upgradeable example requires v2 Wasm to be built before running tests.
   if [ "$name" = "upgradeable" ] && [ -f "$dir/v2/Cargo.toml" ]; then
     log_info "Building v2 Wasm for '${name}' …"
-    if ! cargo build --manifest-path "$dir/v2/Cargo.toml" \
+    if ! cargo build --locked --manifest-path "$dir/v2/Cargo.toml" \
         --target wasm32-unknown-unknown --release \
         --target-dir "$dir/v2/target" 2>&1; then
       log_fail "'${name}' — v2 Wasm build FAILED"
@@ -86,7 +86,7 @@ for dir in "${EXAMPLE_DIRS[@]}"; do
   # Contract factory requires child Wasm to be built before running tests.
   if [ "$name" = "contract-factory" ] && [ -f "$dir/child/Cargo.toml" ]; then
     log_info "Building child Wasm for '${name}' …"
-    if ! cargo build --manifest-path "$dir/child/Cargo.toml" \
+    if ! cargo build --locked --manifest-path "$dir/child/Cargo.toml" \
         --target wasm32-unknown-unknown --release \
         --target-dir "$dir/child/target" 2>&1; then
       log_fail "'${name}' — child Wasm build FAILED"
@@ -97,7 +97,7 @@ for dir in "${EXAMPLE_DIRS[@]}"; do
     fi
   fi
 
-  if cargo test --manifest-path "$dir/Cargo.toml" 2>&1; then
+  if cargo test --locked --manifest-path "$dir/Cargo.toml" 2>&1; then
     log_pass "'${name}' — all tests passed"
     (( PASS++ )) || true
   else
