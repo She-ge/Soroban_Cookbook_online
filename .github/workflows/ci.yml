@@ -280,6 +280,34 @@ jobs:
       - name: Run example tests (locked)
         run: bash scripts/test-examples.sh
 
+  wasm-build-examples:
+    name: Wasm Build Code Examples
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install Rust stable
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: wasm32v1-none
+
+      - name: Cache Cargo registry
+        uses: actions/cache@v6
+        with:
+          path: |
+            ~/.cargo/registry
+            ~/.cargo/git
+            examples/target
+            examples/upgradeable/v2/target
+            examples/contract-factory/child/target
+          key: cargo-wasm-examples-${{ hashFiles('examples/**/Cargo.toml') }}
+          restore-keys: |
+            cargo-wasm-examples-
+
+      - name: Build every example to wasm32v1-none (release)
+        run: bash scripts/build-examples-wasm.sh
+
   lint-contracts:
     name: Lint Contract Code
     runs-on: ubuntu-latest
@@ -485,6 +513,7 @@ jobs:
   summary:
     name: CI Summary
     runs-on: ubuntu-latest
+    needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, wasm-build-examples, lint-contracts, e2e-console, e2e-smoke]
     needs: [lint-format, spellcheck, typecheck, build-docs, validate-deployment, test-examples, lint-contracts, e2e-console, e2e-smoke, coverage]
     if: always()
     steps:
@@ -528,6 +557,10 @@ jobs:
           fi
           if [ "${{ needs.coverage.result }}" != "success" ]; then
             echo "❌ Coverage check failed (thresholds not met)"
+            exit 1
+          fi
+          if [ "${{ needs.wasm-build-examples.result }}" != "success" ]; then
+            echo "❌ Wasm build of code examples failed"
             exit 1
           fi
           echo "✅ All critical CI checks passed"

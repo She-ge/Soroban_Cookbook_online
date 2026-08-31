@@ -174,6 +174,8 @@ impl TokenTransfer {
         env.storage().persistent().set(&key, &AllowanceData { amount, expiration });
 
         env.events().publish(
+            (symbol_short!("approve"), owner, spender),
+            amount,
             (symbol_short!("approve"), owner.clone(), spender.clone()),
             (amount, expiration),
         );

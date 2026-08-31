@@ -9,7 +9,7 @@ keywords = ["soroban", "example", "escrow-basic"]
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-soroban-sdk = { version = "27.0.3", features = ["testutils"] }
+soroban-sdk = "27.0.3"
 
 [dev-dependencies]
 soroban-sdk = { version = "27.0.3", features = ["testutils"] }
