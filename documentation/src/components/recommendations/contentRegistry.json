@@ -222,6 +222,11 @@
     "status": "stable",
     "time": 10,
     "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "tokens"
       "storage",
       "optimization",
       "errors"
@@ -764,6 +769,9 @@
     "href": "/docs/getting-started/first-contract"
   },
   {
+    "id": "getting-started/invoke-host-function",
+    "title": "Transaction Anatomy — Invoking a Contract",
+    "description": "Understand how a classic Stellar account invokes a Soroban contract via the InvokeHostFunction operation — including XDR structure, CLI walkthrough, and Stellar Lab inspection.",
     "id": "getting-started/local-testing-and-simulation",
     "title": "Run all tests",
     "description": "Soroban tutorial on Run all tests.",
@@ -774,6 +782,16 @@
     "time": 25,
     "tags": [
       "auth",
+      "events",
+      "errors",
+      "tokens"
+    ],
+    "href": "/docs/getting-started/invoke-host-function"
+  },
+  {
+    "id": "getting-started/local-testing-and-simulation",
+    "title": "Run all tests",
+    "description": "Soroban tutorial on Run all tests.",
       "storage",
       "events",
       "optimization",
@@ -810,6 +828,38 @@
     "status": "stable",
     "time": 15,
     "tags": [],
+    "href": "/docs/getting-started/local-testing"
+  },
+  {
+    "id": "getting-started/setup-linux",
+    "title": "Linux Environment Setup",
+    "description": "Set up your Soroban development environment on Linux — complete guide for Ubuntu, Debian, and other distributions.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "events",
+      "optimization",
+      "errors"
+    ],
+    "href": "/docs/getting-started/local-testing-and-simulation"
+  },
+  {
+    "id": "getting-started/local-testing",
+    "title": "Soroban Local Testing with Simulation and Snapshots",
+    "description": "Soroban tutorial on Soroban Local Testing with Simulation and Snapshots.",
+    "category": "getting-started",
+    "difficulty": "beginner",
+    "status": "stable",
+    "time": 10,
+    "tags": [
+      "auth",
+      "storage",
+      "optimization"
+    ],
     "href": "/docs/getting-started/local-testing"
   },
   {

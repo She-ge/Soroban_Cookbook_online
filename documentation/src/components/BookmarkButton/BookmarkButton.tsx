@@ -17,6 +17,10 @@ export function BookmarkButton({ path, className }: BookmarkButtonProps) {
   return (
     <button
       type="button"
+      className={styles.bookmarkButton + (a ? ' ' + styles.active : '') + (props.className ? ' ' + props.className : '')}
+      onClick={() => toggleBookmark(p)}
+      aria-pressed={a}>
+      { a ? 'Saved' : 'Bookmark' }
       className={
         styles.bookmarkButton +
         (a ? ' ' + styles.active : '') +

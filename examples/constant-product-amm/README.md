@@ -42,6 +42,6 @@ See [Deploy to Testnet](https://soroban-cookbook.dev/docs/getting-started/deploy
 
 ## Related documentation
 
-- [Pattern Library](https://soroban-cookbook.dev/docs/patterns/overview) — the pattern page this example supports
+- [Gas and Resources](https://soroban-cookbook.dev/docs/concepts/gas-and-resources) — conceptual guide featuring AMM swap execution as an instruction count case study
 - [Pattern Library](https://soroban-cookbook.dev/docs/patterns/overview) — every documented pattern
 - [Adding a Tested Example](https://soroban-cookbook.dev/docs/contributing/add-tested-example) — how these crates are structured

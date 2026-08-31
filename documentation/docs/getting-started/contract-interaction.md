@@ -281,6 +281,7 @@ const response = await fetch('/api/contract/invoke', {
 - [Simulation and Footprints](/docs/concepts/simulation-and-footprints) — understand preflight simulation, footprints, auth modes, and on-chain failures
 - [Wallet integration guide](/docs/getting-started/wallets) — connect Freighter and sign transactions from a dapp
 - [Pattern Library](/docs/patterns/overview) — reusable contract patterns
+- [Transaction Anatomy: Invoking a Contract](./invoke-host-function) — XDR structure and Stellar Lab walkthrough
 - [JavaScript SDK](./js-sdk.md) — browser RPC client and Freighter signing
 - [API Security](./api-security.md) — CORS, RPC allowlists, and secrets
 - [Deploy to testnet](/docs/getting-started/deploy-testnet)
