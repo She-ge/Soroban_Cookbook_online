@@ -101,7 +101,13 @@ const sidebars: SidebarsConfig = {
     {
       type: 'category',
       label: 'Security',
-      items: ['security/fundamentals', 'security/governance', 'security/defi-patterns', 'security/upgrade-checklist'],
+      items: [
+        'security/fundamentals',
+        'security/governance',
+        'security/defi-patterns',
+        'security/token-audit',
+        'security/upgrade-checklist',
+      ],
     },
   ],
   internalSidebar: [
