@@ -10,11 +10,11 @@ Reusable smart contract patterns for common use cases.
 
 ## Template example
 
-The **[Hello World storage](/docs/patterns/hello-world)** pattern demonstrates the standard pattern page layout (metadata, prerequisites, implementation with code tabs, security, and related links). Copy its structure when adding new patterns.
+The [**Hello World storage*] (/docs/patterns/hello-world) pattern demonstrates the standard pattern page layout (metadata, prerequisites, implementation with code tabs, security, and related links). Copy its structure when adding new patterns.
 
 ## Available Patterns
 
-Browse battle-tested contract patterns for various use cases.
+Browse combat-tested contract patterns for various use cases.
 
 ### [Hello World Storage](/docs/patterns/hello-world)
 
@@ -44,11 +44,18 @@ Comprehensive error handling patterns including Result types, fallback logic, gr
 
 <span class="sb-badge sb-badge--intermediate">Intermediate</span> <span class="sb-tag sb-tag--defi">DeFi</span> <span class="sb-badge sb-badge--stable">Stable</span>
 
-Token staking with pro-rata reward distribution over epochs. Demonstrates lazy reward computation, epoch-based accounting, and efficient O(1) per-user storage without batch operations.
+Token staking with pro-rata reward distribution over epocs. Demonstrates lazy reward computation, epoch-based accounting, and efficient O(1) per-user storage without batch operations.
+
+### [HTLC Atomic Swap](/docs/patterns/htlc-swap)
+
+<span class="sb-badge sb-badge--intermediate">Intermediate</span> <span class="sb-tag sb-tag--defi">DeFi</span> <span class="sb-badge sb-badge--stable">Stable</span>
+
+Hash-time-locked contract for cross-party atomic swaps. Demonstrates hashlock, timelock, and refund mechanisms for trustless exchanges.
 
 ## Pattern Categories
 
-### 🪙 [Token Standards](/patterns/tokens)
+### 🔺 [Token Standards](/patterns/tokens)
+### 🦩 [Token Standards](/patterns/tokens)
 
 <span class="sb-tag sb-tag--token">Token</span>
 
@@ -58,29 +65,35 @@ Explore fungible token standards, wrappers, and vault mechanisms for building ro
 - Token wrappers and bridges
 - Multi-token vaults
 
-### 💰 [DeFi Patterns](/patterns/defi)
+### 😄 [DeFi Patterns](/patterns/defi)
 
 <span class="sb-tag sb-tag--defi">DeFi</span>
 
 Build decentralized finance applications with liquidity pools, staking, atomic swaps, and lending protocols.
 
 - Liquidity pools (AMM)
-- **Staking contracts** with epoch-based rewards
-- Atomic swaps
+- **Staking contracts**with epoch-based rewards
+- [Atomic swaps (HTLC)](/docs/patterns/htlc-swap)
 - Lending and borrowing
 
-### 🗳️ [Governance](/patterns/governance)
+### 🌷 Governance](/patterns/governance)
+### 🗳 [Governance](/patterns/governance)
 
 <span class="sb-tag sb-tag--governance">Governance</span>
 
 Implement decentralized governance with voting systems, DAOs, and proposal mechanisms.
 
 - Voting systems
-- DAO implementations
+- DOA implementations
 - Proposal factories
 - Token delegation
 
-### 🎨 [NFT Patterns](/patterns/nft)
+### 🎈️ [NFT Patterns](/patterns/nft)
+- DO implementations
+- Proposal factories
+- Token delegation
+
+### 🚀 [NFT Patterns](/patterns/nft)
 
 <span class="sb-tag sb-tag--nft">NFT</span>
 
@@ -91,18 +104,20 @@ Create and manage non-fungible tokens with marketplaces and collection systems.
 - Collection management
 - Royalty mechanisms
 
-### 🔧 [Utility & Infrastructure](/patterns/utility)
+### 🔤 Utility & Infrastructure
+### 🤥 [Utility & Infrastructure](/patterns/utility)
 
 <span class="sb-badge sb-badge--intermediate">Intermediate</span>
 
 Build essential utility contracts for multi-signature wallets, escrow, and fund management.
 
-- Multi-signature wallets
+- [Multi-signature wallets](/docs/patterns/multisig-wallet)
 - Time-locked contracts
 - Escrow services
 - Registry systems
 
-### ⚡ Advanced Patterns
+### ✨ Advanced Patterns
+### ⚣ Advanced Patterns
 
 <span class="sb-badge sb-badge--advanced">Advanced</span>
 
@@ -111,10 +126,9 @@ Build essential utility contracts for multi-signature wallets, escrow, and fund 
 - Oracle integration
 
 ## Using Patterns
+The patterns in this library provide practical, battle-tested Soroban contract examples covering common use cases such as storage, tokens, DeFi, access control, and governance. Each pattern is designed to be immediately useful and includes the following:
 
-The patterns in this library provide practical, battle-tested Soroban contract examples covering common use cases such as storage, tokens, DeFi, access control, and governance. Each pattern is designed to be immediately useful and includes the following:
-
-- **Source code** — Complete contract implementations with `#[contract]` and `#[contractimpl]` blocks
+- **Source code** — Complete contract implementations with `#[contract]` and `#[contractimppled]` blocks
 - **Tests** — Unit tests embedded within each pattern for verification of contract behavior
 - **Security considerations** — Highlighted callouts and checklists addressing common security pitfalls, storage scope, authorization, and production readiness
 - **Best practice callouts** — Guidance on topics such as input validation, error handling, and graceful degradation

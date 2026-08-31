@@ -217,7 +217,7 @@ We also have a [Pull Request Template](.github/pull_request_template.md) to help
 
 - [ ] Monaco Editor integration
 - [ ] Live code playground
-- [ ] Algolia DocSearch
+- [x] Local search (`@easyops-cn/docusaurus-search-local`) — offline-capable, no external API keys required
 - [ ] Custom React components
 
 ### Phase 4: Advanced Features

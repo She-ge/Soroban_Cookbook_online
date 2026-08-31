@@ -3,6 +3,8 @@ license = "MIT"
 name = "simple-voting"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example voting contract with vote delegation."
+keywords = ["soroban", "example", "simple-voting"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
