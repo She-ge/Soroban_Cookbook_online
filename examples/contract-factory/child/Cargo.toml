@@ -2,6 +2,8 @@
 name = "contract-factory-child"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example child contract deployed by the contract-factory example."
+keywords = ["soroban", "example", "contract-factory"]
 publish = false
 
 [workspace]

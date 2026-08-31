@@ -1,5 +1,5 @@
 //! Simple token contract that serves as the "callee" in cross-contract invocations.
-//! 
+//!
 //! This contract demonstrates:
 //! - Basic token operations (mint, transfer, balance)
 //! - Authorization requirements
@@ -17,6 +17,8 @@ pub enum DataKey {
 
 #[contracterror]
 #[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
+#[contracterror]
+#[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[repr(u32)]
 pub enum TokenError {
     /// Insufficient balance for the requested operation
@@ -59,8 +61,20 @@ impl Token {
         env.events().publish(
             (Symbol::new(&env, "transfer"), env.current_contract_address()),
             (env.current_contract_address(), to, amount)
+
+        env.storage()
+            .persistent()
+            .set(&DataKey::Balance(to.clone()), &new_balance);
+
+        // Emit transfer event
+        env.events().publish(
+            (
+                Symbol::new(&env, "transfer"),
+                env.current_contract_address(),
+            ),
+            (env.current_contract_address(), to, amount),
         );
-        
+
         Ok(())
     }
 
@@ -74,23 +88,32 @@ impl Token {
         }
 
         let from_balance = Self::balance(env.clone(), from.clone());
-        
+
         if from_balance < amount {
             return Err(TokenError::InsufficientBalance);
         }
 
         let to_balance = Self::balance(env.clone(), to.clone());
-        
+
         // Update balances
-        env.storage().persistent().set(&DataKey::Balance(from.clone()), &(from_balance - amount));
-        env.storage().persistent().set(&DataKey::Balance(to.clone()), &(to_balance + amount));
-        
+        env.storage()
+            .persistent()
+            .set(&DataKey::Balance(from.clone()), &(from_balance - amount));
+        env.storage()
+            .persistent()
+            .set(&DataKey::Balance(to.clone()), &(to_balance + amount));
+
         // Emit transfer event
         env.events().publish(
             (Symbol::new(&env, "transfer"), env.current_contract_address()),
             (from, to, amount)
+            (
+                Symbol::new(&env, "transfer"),
+                env.current_contract_address(),
+            ),
+            (from, to, amount),
         );
-        
+
         Ok(())
     }
 
@@ -112,7 +135,7 @@ impl Token {
         if should_fail {
             panic!("Simulated contract failure");
         }
-        
+
         // Return some computation
         Ok(42)
     }

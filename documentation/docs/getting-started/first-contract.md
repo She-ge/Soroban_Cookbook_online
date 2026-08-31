@@ -91,6 +91,7 @@ cargo test
 - [Contract Testing Guide](./contract-testing) - Learn how to write and run tests
 - [Building and Compilation](./building-and-compilation) — compile your contract to WASM
 - [Deploy to testnet](./deploy-testnet)
+- [Constructor Arguments (`__constructor`) vs. delayed `initialize`](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/examples/constructor-init/src/lib.rs) — pass setup values to your contract at deploy time with `__constructor`, and see why the older `initialize` pattern needs a double-init guard
 - [Learn about storage](../concepts/storage)
 - [Explore patterns](../patterns/overview)
 

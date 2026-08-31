@@ -2,6 +2,8 @@
 name = "upgradeable-v2"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example v2 implementation used to demonstrate admin-controlled contract upgrades."
+keywords = ["soroban", "example", "upgradeable"]
 publish = false
 
 [workspace]

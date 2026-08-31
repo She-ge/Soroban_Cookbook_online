@@ -2,12 +2,14 @@
 name = "contract-factory"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example factory contract that deploys child contract instances."
+keywords = ["soroban", "example", "contract-factory"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-soroban-sdk = { version = "27.0.3", features = ["testutils"] }
+soroban-sdk = "27.0.3"
 
 [dev-dependencies]
 soroban-sdk = { version = "27.0.3", features = ["testutils"] }

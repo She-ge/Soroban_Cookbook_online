@@ -533,6 +533,39 @@ soroban account transactions --account my-testnet-account --network testnet
 # https://testnet.stellar.expert/account/[your-account-id]
 ```
 
+## Using the Faucet Example
+
+If you need test tokens for your dApp during development, deploy the
+**faucet** example contract. It distributes tokens on testnet with built-in
+rate limiting (per-address cooldown) and a global distribution cap.
+
+```bash
+# Build the faucet
+cargo build --manifest-path examples/faucet/Cargo.toml --target wasm32-unknown-unknown --release
+
+# Deploy
+FAUCET_ID=$(soroban contract deploy \
+  --wasm examples/target/wasm32-unknown-unknown/release/faucet.wasm \
+  --source my-testnet-account \
+  --network testnet)
+
+# Initialise: 100 tokens per claim, 100-ledger cooldown, 1 M token cap
+soroban contract invoke \
+  --id $FAUCET_ID \
+  --source my-testnet-account \
+  --network testnet \
+  -- init \
+  --admin my-testnet-account \
+  --drip_amount 100 \
+  --cooldown_ledgers 100 \
+  --max_total_claims 1000000
+```
+
+> **Note:** The faucet is testnet-only. It distributes informational tokens to
+> help developers experiment -- it does not transfer real value.
+
+See the full [faucet example](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/faucet) for source code and additional usage details.
+
 ## Next Steps
 
 Now that your contract is deployed:
