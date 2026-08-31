@@ -7,7 +7,7 @@ const examples = [
     name: 'access-control',
     difficulty: 'Intermediate',
     hasPattern: false,
-    patternName: null,
+    patternName: 'access-control',
   },
   {
     name: 'authorization',
@@ -19,23 +19,23 @@ const examples = [
     name: 'balance-snapshot',
     difficulty: 'Intermediate',
     hasPattern: false,
-    patternName: null,
+    patternName: 'balance-snapshot',
   },
   {
     name: 'batch-ops',
-    difficulty: 'Advanced',
+    difficulty: 'Intermediate',
     hasPattern: false,
-    patternName: null,
+    patternName: 'batch-ops',
   },
   {
     name: 'constant-product-amm',
     difficulty: 'Advanced',
     hasPattern: false,
-    patternName: null,
+    patternName: 'constant-product-amm',
   },
   {
     name: 'contract-factory',
-    difficulty: 'Beginner',
+    difficulty: 'Intermediate',
     hasPattern: true,
     patternName: 'contract-factory',
   },
@@ -43,19 +43,19 @@ const examples = [
     name: 'counter',
     difficulty: 'Beginner',
     hasPattern: false,
-    patternName: null,
+    patternName: 'counter',
   },
   {
     name: 'cross-contract',
     difficulty: 'Advanced',
     hasPattern: false,
-    patternName: null,
+    patternName: 'cross-contract',
   },
   {
     name: 'emergency-stop',
     difficulty: 'Intermediate',
     hasPattern: false,
-    patternName: null,
+    patternName: 'emergency-stop',
   },
   {
     name: 'error-handling',
@@ -79,7 +79,7 @@ const examples = [
     name: 'flash-loan',
     difficulty: 'Advanced',
     hasPattern: false,
-    patternName: null,
+    patternName: 'flash-loan',
   },
   {
     name: 'hello-world',
@@ -91,7 +91,7 @@ const examples = [
     name: 'htlc-swap',
     difficulty: 'Advanced',
     hasPattern: false,
-    patternName: null,
+    patternName: 'htlc-swap',
   },
   {
     name: 'multi-token-vault',
@@ -103,11 +103,11 @@ const examples = [
     name: 'multisig-wallet',
     difficulty: 'Intermediate',
     hasPattern: false,
-    patternName: null,
+    patternName: 'multisig-wallet',
   },
   {
     name: 'oracle-consumer',
-    difficulty: 'Advanced',
+    difficulty: 'Intermediate',
     hasPattern: true,
     patternName: 'oracle-consumer',
   },
@@ -120,20 +120,20 @@ const examples = [
   {
     name: 'registry',
     difficulty: 'Intermediate',
-    hasPattern: true,
-    patternName: 'contract-registry',
+    hasPattern: false,
+    patternName: 'registry',
   },
   {
     name: 'simple-dao',
     difficulty: 'Intermediate',
     hasPattern: false,
-    patternName: null,
+    patternName: 'simple-dao',
   },
   {
     name: 'simple-voting',
     difficulty: 'Beginner',
     hasPattern: false,
-    patternName: null,
+    patternName: 'simple-voting',
   },
   {
     name: 'staking',
@@ -144,8 +144,8 @@ const examples = [
   {
     name: 'stream-payment',
     difficulty: 'Intermediate',
-    hasPattern: true,
-    patternName: 'streaming-payments',
+    hasPattern: false,
+    patternName: 'stream-payment',
   },
   {
     name: 'timelock-vault',
@@ -163,25 +163,25 @@ const examples = [
     name: 'token-transfer',
     difficulty: 'Beginner',
     hasPattern: false,
-    patternName: null,
+    patternName: 'token-transfer',
   },
   {
     name: 'token-vesting',
     difficulty: 'Intermediate',
     hasPattern: false,
-    patternName: null,
+    patternName: 'token-vesting',
   },
   {
     name: 'token-wrapper',
     difficulty: 'Intermediate',
     hasPattern: false,
-    patternName: null,
+    patternName: 'token-wrapper',
   },
   {
     name: 'upgradeable',
     difficulty: 'Advanced',
     hasPattern: false,
-    patternName: null,
+    patternName: 'upgradeable',
   },
 ];
 
@@ -189,23 +189,34 @@ const examples = [
 
 | Example / Crate Name | Difficulty | Source Code Link | Pattern Documentation |
 |----------------------|------------|------------------|----------------------|
-{examples.map((ex) => (
-  <tr>
-    <td>{ex.name}</td>
-    <td><Badge variant={ex.difficulty.toLowerCase()}>{ex.difficulty}</Badge></td>
-    <td>
-      <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/${ex.name}">
-        GitHub
-      </a>
-    </td>
-    <td>
-      {ex.hasPattern ? (
-        <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/documentation/docs/patterns/${ex.patternName}.mdx">
-          Docs
-        </a>
-      ) : (
-        <span style={{ border: '1px solid #ef4444', borderRadius: '3px', padding: '2px 6px', fontSize: '0.7em', color: '#ef4444' }}>Docs Missing</span>
-      )}
-    </td>
-  </tr>
-))}
+| access-control | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/access-control">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| authorization | <Badge variant="beginner">Beginner</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/authorization">GitHub</a> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/documentation/docs/patterns/authorization.mdx">Docs</a> |
+| balance-snapshot | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/balance-snapshot">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| batch-ops | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/batch-ops">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| constant-product-amm | <Badge variant="advanced">Advanced</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/constant-product-amm">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| contract-factory | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/contract-factory">GitHub</a> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/documentation/docs/patterns/contract-factory.mdx">Docs</a> |
+| counter | <Badge variant="beginner">Beginner</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/counter">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| cross-contract | <Badge variant="advanced">Advanced</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/cross-contract">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| emergency-stop | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/emergency-stop">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| error-handling | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/error-handling">GitHub</a> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/documentation/docs/patterns/error-handling.mdx">Docs</a> |
+| escrow-basic | <Badge variant="beginner">Beginner</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/escrow-basic">GitHub</a> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/documentation/docs/patterns/escrow-basic.mdx">Docs</a> |
+| escrow-multiparty | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/escrow-multiparty">GitHub</a> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/documentation/docs/patterns/escrow-multiparty.mdx">Docs</a> |
+| flash-loan | <Badge variant="advanced">Advanced</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/flash-loan">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| hello-world | <Badge variant="beginner">Beginner</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/hello-world">GitHub</a> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/documentation/docs/patterns/hello-world.mdx">Docs</a> |
+| htlc-swap | <Badge variant="advanced">Advanced</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/htlc-swap">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| multi-token-vault | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/multi-token-vault">GitHub</a> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/documentation/docs/patterns/multi-token-vault.mdx">Docs</a> |
+| multisig-wallet | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/multisig-wallet">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| oracle-consumer | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/oracle-consumer">GitHub</a> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/documentation/docs/patterns/oracle-consumer.mdx">Docs</a> |
+| reentrancy-guard | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/reentrancy-guard">GitHub</a> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/documentation/docs/patterns/reentrancy-guard.mdx">Docs</a> |
+| registry | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/registry">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| simple-dao | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/simple-dao">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| simple-voting | <Badge variant="beginner">Beginner</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/simple-voting">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| staking | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/staking">GitHub</a> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/documentation/docs/patterns/staking.mdx">Docs</a> |
+| stream-payment | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/stream-payment">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| timelock-vault | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/timelock-vault">GitHub</a> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/documentation/docs/patterns/timelock-vault.mdx">Docs</a> |
+| token-snapshot | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/token-snapshot">GitHub</a> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/documentation/docs/patterns/token-snapshot.mdx">Docs</a> |
+| token-transfer | <Badge variant="beginner">Beginner</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/token-transfer">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| token-vesting | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/token-vesting">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| token-wrapper | <Badge variant="intermediate">Intermediate</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/token-wrapper">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+| upgradeable | <Badge variant="advanced">Advanced</Badge> | <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/upgradeable">GitHub</a> | <span style="border: 1px solid #ef4444; border-radius: 3px; padding: 2px 6px; font-size: 0.7em; color: #ef4444">Docs Missing</span> |
+]

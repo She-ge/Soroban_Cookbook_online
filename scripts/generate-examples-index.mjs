@@ -12,7 +12,7 @@ import { fileURLToPath } from 'url';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const REPO_ROOT = path.resolve(__dirname, '....');
+const REPO_ROOT = path.resolve(__dirname, '..');
 const EXAMPLES_DIR = path.join(REPO_ROOT, 'examples');
 const PATTERNS_DIR = path.join(REPO_ROOT, 'documentation', 'docs', 'patterns');
 const INDEX_MDX_PATH = path.join(PATTERNS_DIR, 'examples-index.mdx');
@@ -74,9 +74,8 @@ function parseCargoToml(content) {
 
   return result;
 }
-
 function determineDifficulty(crateName, cargoName) {
-  const lowerName = cargoName.toLowerCase();
+  const target = (cargoName || crateName || '').toLowerCase();
 
   const beginnerCrates = [
     'counter', 'hello-world', 'authorization', 'escrow-basic',
