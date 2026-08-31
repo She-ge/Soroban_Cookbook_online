@@ -1,0 +1,211 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import Badge from '@site/src/components/Badge';
+
+const examples = [
+  {
+    name: 'access-control',
+    difficulty: 'Intermediate',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'authorization',
+    difficulty: 'Beginner',
+    hasPattern: true,
+    patternName: 'authorization',
+  },
+  {
+    name: 'balance-snapshot',
+    difficulty: 'Intermediate',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'batch-ops',
+    difficulty: 'Advanced',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'constant-product-amm',
+    difficulty: 'Advanced',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'contract-factory',
+    difficulty: 'Beginner',
+    hasPattern: true,
+    patternName: 'contract-factory',
+  },
+  {
+    name: 'counter',
+    difficulty: 'Beginner',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'cross-contract',
+    difficulty: 'Advanced',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'emergency-stop',
+    difficulty: 'Intermediate',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'error-handling',
+    difficulty: 'Intermediate',
+    hasPattern: true,
+    patternName: 'error-handling',
+  },
+  {
+    name: 'escrow-basic',
+    difficulty: 'Beginner',
+    hasPattern: true,
+    patternName: 'escrow-basic',
+  },
+  {
+    name: 'escrow-multiparty',
+    difficulty: 'Intermediate',
+    hasPattern: true,
+    patternName: 'escrow-multiparty',
+  },
+  {
+    name: 'flash-loan',
+    difficulty: 'Advanced',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'hello-world',
+    difficulty: 'Beginner',
+    hasPattern: true,
+    patternName: 'hello-world',
+  },
+  {
+    name: 'htlc-swap',
+    difficulty: 'Advanced',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'multi-token-vault',
+    difficulty: 'Intermediate',
+    hasPattern: true,
+    patternName: 'multi-token-vault',
+  },
+  {
+    name: 'multisig-wallet',
+    difficulty: 'Intermediate',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'oracle-consumer',
+    difficulty: 'Advanced',
+    hasPattern: true,
+    patternName: 'oracle-consumer',
+  },
+  {
+    name: 'reentrancy-guard',
+    difficulty: 'Intermediate',
+    hasPattern: true,
+    patternName: 'reentrancy-guard',
+  },
+  {
+    name: 'registry',
+    difficulty: 'Intermediate',
+    hasPattern: true,
+    patternName: 'contract-registry',
+  },
+  {
+    name: 'simple-dao',
+    difficulty: 'Intermediate',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'simple-voting',
+    difficulty: 'Beginner',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'staking',
+    difficulty: 'Intermediate',
+    hasPattern: true,
+    patternName: 'staking',
+  },
+  {
+    name: 'stream-payment',
+    difficulty: 'Intermediate',
+    hasPattern: true,
+    patternName: 'streaming-payments',
+  },
+  {
+    name: 'timelock-vault',
+    difficulty: 'Intermediate',
+    hasPattern: true,
+    patternName: 'timelock-vault',
+  },
+  {
+    name: 'token-snapshot',
+    difficulty: 'Intermediate',
+    hasPattern: true,
+    patternName: 'token-snapshot',
+  },
+  {
+    name: 'token-transfer',
+    difficulty: 'Beginner',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'token-vesting',
+    difficulty: 'Intermediate',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'token-wrapper',
+    difficulty: 'Intermediate',
+    hasPattern: false,
+    patternName: null,
+  },
+  {
+    name: 'upgradeable',
+    difficulty: 'Advanced',
+    hasPattern: false,
+    patternName: null,
+  },
+];
+
+## Examples Index
+
+| Example / Crate Name | Difficulty | Source Code Link | Pattern Documentation |
+|----------------------|------------|------------------|----------------------|
+{examples.map((ex) => (
+  <tr>
+    <td>{ex.name}</td>
+    <td><Badge variant={ex.difficulty.toLowerCase()}>{ex.difficulty}</Badge></td>
+    <td>
+      <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/${ex.name}">
+        GitHub
+      </a>
+    </td>
+    <td>
+      {ex.hasPattern ? (
+        <a href="https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/documentation/docs/patterns/${ex.patternName}.mdx">
+          Docs
+        </a>
+      ) : (
+        <span style={{ border: '1px solid #ef4444', borderRadius: '3px', padding: '2px 6px', fontSize: '0.7em', color: '#ef4444' }}>Docs Missing</span>
+      )}
+    </td>
+  </tr>
+))}
