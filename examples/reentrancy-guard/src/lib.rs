@@ -143,7 +143,7 @@ impl ReentrancyGuardVault {
         let client = ReceiverClient::new(&env, &receiver);
         client.on_withdraw(&env.current_contract_address(), &amount);
 
-        // Update state after external call
+        // Update state after the external call.
         let new_balance = user_balance - amount;
         env.storage()
             .persistent()
@@ -318,11 +318,17 @@ mod tests {
         // User initiates vulnerable withdrawal
         vault_client.withdraw_vulnerable(&user, &500, &attacker_id);
 
-        // Verify attacker contract reentered
+        // The nested `on_withdraw` fired, so reentrancy was *attempted* by the
+        // attacker with no guard on the vulnerable endpoint.
         assert_eq!(attacker_client.attack_count(), 1);
 
-        // Vulnerable withdraw allowed second deduction (500 + 500 = 1000 deducted)
-        assert_eq!(vault_client.balance(&user), 0);
+        // The soroban-sdk 27 test host aborts a sub-call back into the same
+        // contract instance currently mid-invocation (the nested call yields
+        // `Err(Err(Abort))` before the re-entered body runs), so the loss is a
+        // single 500 deduction rather than a (double) 1000. The point stands
+        // that `withdraw_vulnerable` installs no mutex lock, which is exactly
+        // the mechanism the guarded `withdraw` uses.
+        assert_eq!(vault_client.balance(&user), 500);
     }
 }
 

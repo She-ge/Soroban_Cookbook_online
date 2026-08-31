@@ -1,5 +1,19 @@
 #![no_std]
 use soroban_sdk::{contract, contracterror, contractimpl, contracttype, token, Address, Env};
+//! ## Rounding policy
+//!
+//! Every swap computes its output amount with `checked_div`, which truncates
+//! toward zero (floors, for the non-negative amounts used here). That means
+//! a swap always pays out **at most** the exact real-number constant-product
+//! quote, never more — so any rounding error is retained by the pool rather
+//! than leaked to the trader. Combined with the 0.3% input fee (see
+//! `swap_a_for_b` / `swap_b_for_a`), this guarantees the invariant
+//! `reserve_a * reserve_b` never decreases across a swap. See
+//! `test_invariant_never_decreases_across_swaps` below for a property test
+//! that exercises this over many pseudo-random swap sequences.
+use soroban_sdk::{
+    contract, contracterror, contractimpl, contracttype, token, Address, Env,
+};
 
 #[contracttype]
 #[derive(Clone, Debug)]
@@ -57,16 +71,30 @@ impl ConstantProductAmm {
         Ok(())
     }
 
+    /// These internal helpers are only reached after `initialize`, which
+    /// populates `Reserves`/`TokenA`/`TokenB`; guard the reads with an explicit
+    /// panic message rather than a bare unwrap in case a future call path
+    /// reaches them pre-initialisation.
     fn get_reserves_internal(env: &Env) -> Reserves {
         env.storage().persistent().get(&DataKey::Reserves).unwrap()
+        match env.storage().persistent().get(&DataKey::Reserves) {
+            Some(reserves) => reserves,
+            None => panic!("constant-product-amm: reserves not initialized"),
+        }
     }
 
     fn get_token_a(env: &Env) -> Address {
-        env.storage().persistent().get(&DataKey::TokenA).unwrap()
+        match env.storage().persistent().get(&DataKey::TokenA) {
+            Some(token) => token,
+            None => panic!("constant-product-amm: token_a not initialized"),
+        }
     }
 
     fn get_token_b(env: &Env) -> Address {
-        env.storage().persistent().get(&DataKey::TokenB).unwrap()
+        match env.storage().persistent().get(&DataKey::TokenB) {
+            Some(token) => token,
+            None => panic!("constant-product-amm: token_b not initialized"),
+        }
     }
 
     fn read_lp_balance(env: &Env, address: &Address) -> i128 {
@@ -609,23 +637,21 @@ mod tests {
         assert_eq!(result, Err(Ok(Error::Overflow)));
     }
 
-    /// add_liquidity with amounts that would cause lp_total_supply * amount to
-    /// overflow returns Overflow.
+    /// add_liquidity with amounts that would cause the reserve * amount
+    /// product to overflow returns Overflow.
     #[test]
     fn test_add_liquidity_large_amounts_overflow() {
         let setup = setup();
 
-        // First deposit: set up the pool with large reserves.
-        setup.sac_a.mint(&setup.alice, &i128::MAX);
-        setup.sac_b.mint(&setup.alice, &i128::MAX);
-
-        // Seed the pool — use half of i128::MAX to leave room.
-        let half = i128::MAX / 2;
+        // Seed the pool with modest reserves (Alice already holds 1_000_000
+        // of each token). sqrt(10_000 * 10_000) = 10_000 LP.
         setup
             .client
-            .add_liquidity(&setup.alice, &half, &half, &0, &0);
+            .add_liquidity(&setup.alice, &10_000, &10_000, &0, &0);
 
-        // Second deposit: the lp_total_supply * amount_a product will overflow.
+        // Second deposit: amount_a_desired * reserve_b overflows i128, which
+        // must be caught and surfaced as Error::Overflow before any token
+        // transfer is attempted.
         let result = setup
             .client
             .try_add_liquidity(&setup.bob, &i128::MAX, &i128::MAX, &0, &0);
@@ -651,5 +677,73 @@ mod tests {
             .add_liquidity(&setup.alice, &100_000, &200_000, &90_000, &180_000);
         let result = setup.client.try_swap_a_for_b(&setup.bob, &0, &0);
         assert_eq!(result, Err(Ok(Error::InvalidAmount)));
+    }
+
+    // ── invariant property test ──────────────────────────────────────────────
+
+    /// A tiny deterministic PRNG (xorshift64*) so the swap sequence below is
+    /// reproducible on every run and platform without pulling in an external
+    /// fuzz-testing dependency.
+    struct Rng(u64);
+
+    impl Rng {
+        fn next_u64(&mut self) -> u64 {
+            let mut x = self.0;
+            x ^= x << 13;
+            x ^= x >> 7;
+            x ^= x << 17;
+            self.0 = x;
+            x
+        }
+
+        /// Random value in `1..=max` (inclusive), `max` must be >= 1.
+        fn next_range(&mut self, max: i128) -> i128 {
+            1 + (self.next_u64() % (max as u64)) as i128
+        }
+
+        fn next_bool(&mut self) -> bool {
+            self.next_u64() % 2 == 0
+        }
+    }
+
+    /// Property test: for any sequence of swaps in either direction, the
+    /// constant-product invariant `reserve_a * reserve_b` must never
+    /// decrease (see the "Rounding policy" note at the top of this file).
+    /// A bug that mixed up which reserve gets credited/debited, or that
+    /// rounded in the trader's favor instead of the pool's, would show up
+    /// here as a decreasing `k` on some random swap — which a handful of
+    /// hand-written example-based tests could easily miss.
+    #[test]
+    fn test_invariant_never_decreases_across_swaps() {
+        let setup = setup();
+        setup
+            .client
+            .add_liquidity(&setup.alice, &1_000_000, &1_000_000, &0, &0);
+
+        let mut rng = Rng(0x2545_F491_4F6C_DD1D);
+        let reserves = setup.client.get_reserves();
+        let mut prev_k = reserves.reserve_a * reserves.reserve_b;
+
+        for i in 0..200 {
+            let reserves = setup.client.get_reserves();
+            // Keep each swap small relative to the current reserves so 200
+            // iterations don't drain either side of the pool to zero.
+            let max_in = (reserves.reserve_a.min(reserves.reserve_b) / 20).max(1);
+            let amount = rng.next_range(max_in);
+
+            if rng.next_bool() {
+                setup.client.swap_a_for_b(&setup.bob, &amount, &0);
+            } else {
+                setup.client.swap_b_for_a(&setup.bob, &amount, &0);
+            }
+
+            let reserves = setup.client.get_reserves();
+            let k = reserves.reserve_a * reserves.reserve_b;
+            assert!(
+                k >= prev_k,
+                "invariant decreased on swap #{i}: prev_k={prev_k}, k={k}, reserves={reserves:?}"
+            );
+            prev_k = k;
+        }
     }
 }

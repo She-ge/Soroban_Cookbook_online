@@ -47,6 +47,12 @@ impl TestToken {
         env.storage().persistent().set(&key, &(bal + amount));
     }
 }
+    testutils::Address as _,
+    token::{StellarAssetClient, TokenClient},
+    Address, Env, Vec,
+};
+
+use crate::{MultisigWallet, MultisigWalletClient, TransferProposal, WalletError};
 
 struct Fixture {
     _env: Env,
@@ -63,8 +69,15 @@ fn setup_2of3() -> Fixture {
     let env = Env::default();
     env.mock_all_auths();
 
-    let token_id = env.register(TestToken, ());
-    let token = TokenClient::new(&env, &token_id);
+    // The wallet drives its token through the standard Soroban token interface
+    // (`TokenClient`), so use a real Stellar asset contract rather than a
+    // hand-rolled mock.
+    let admin = Address::generate(&env);
+    let token_addr = env
+        .register_stellar_asset_contract_v2(admin.clone())
+        .address();
+    let token = TokenClient::new(&env, &token_addr);
+    let sac = StellarAssetClient::new(&env, &token_addr);
 
     let wallet_id = env.register(MultisigWallet, ());
     let wallet = MultisigWalletClient::new(&env, &wallet_id);
@@ -77,9 +90,9 @@ fn setup_2of3() -> Fixture {
     let signers = Vec::from_array(&env, [alice.clone(), bob.clone(), charlie.clone()]);
     wallet.initialize(&signers, &2u32);
 
-    TestTokenClient::new(&env, &token_id).mint(&alice, &10_000);
-    TestTokenClient::new(&env, &token_id).mint(&bob, &10_000);
-    TestTokenClient::new(&env, &token_id).mint(&charlie, &10_000);
+    sac.mint(&alice, &10_000);
+    sac.mint(&bob, &10_000);
+    sac.mint(&charlie, &10_000);
 
     Fixture {
         _env: env,

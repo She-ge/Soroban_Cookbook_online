@@ -2,12 +2,14 @@
 name = "emergency-stop"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example circuit breaker that pauses and resumes a guarded operation via admin auth."
+keywords = ["soroban", "example", "emergency-stop"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
 
 [dependencies]
-soroban-sdk = { version = "27.0.3", features = ["testutils"] }
+soroban-sdk = "27.0.3"
 
 [dev-dependencies]
 soroban-sdk = { version = "27.0.3", features = ["testutils"] }

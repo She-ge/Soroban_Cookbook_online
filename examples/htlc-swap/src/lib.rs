@@ -188,7 +188,7 @@ mod tests {
     fn advance_time(env: &Env, timestamp: u64) {
         env.ledger().set(LedgerInfo {
             timestamp,
-            protocol_version: 22,
+            protocol_version: 27,
             sequence_number: env.ledger().sequence(),
             network_id: Default::default(),
             base_reserve: 10,

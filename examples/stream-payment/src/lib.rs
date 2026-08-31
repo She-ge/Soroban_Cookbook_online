@@ -315,8 +315,12 @@ mod tests {
     #[test]
     fn nothing_withdrawable_before_stream_starts() {
         let fixture = setup();
-        set_time(&fixture.env, START_TIME - 1);
+        // `setup()` sets the clock to START_TIME, so initializing records that
+        // time as the stream start. Move the clock back after initialization
+        // so `withdraw` actually runs *before* the stream has started.
         initialize(&fixture);
+        assert_eq!(fixture.client.stream().start_time, START_TIME);
+        set_time(&fixture.env, START_TIME - 1);
 
         assert_eq!(fixture.client.available_amount(), 0);
         assert_eq!(
@@ -447,13 +451,16 @@ mod tests {
     }
 
     #[test]
-    #[should_panic]
+    #[should_panic(expected = "HostError: Error(Auth, InvalidAction)")]
     fn unauthorized_withdrawal_fails() {
-        let fixture = setup();
+        let mut fixture = setup();
         initialize(&fixture);
 
-        // Without mock_all_auths, an unauthorized caller must fail.
-        // The require_auth() call in withdraw() will panic.
+        // `setup()` mocks all auths; clear them so `recipient.require_auth()`
+        // in `withdraw()` actually runs. The client is not the recipient, so
+        // it panics with an auth error.
+        fixture.env.set_auths(&[]);
+
         set_time(&fixture.env, START_TIME + 500);
         fixture.client.withdraw();
     }

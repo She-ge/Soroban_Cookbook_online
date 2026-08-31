@@ -382,7 +382,7 @@ mod tests {
     fn set_ledger_sequence(env: &Env, sequence: u32) {
         env.ledger().set(LedgerInfo {
             timestamp: env.ledger().timestamp(),
-            protocol_version: 22,
+            protocol_version: 27,
             sequence_number: sequence,
             network_id: Default::default(),
             base_reserve: 10,

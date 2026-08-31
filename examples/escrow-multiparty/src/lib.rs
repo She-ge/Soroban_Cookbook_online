@@ -318,6 +318,12 @@ mod tests {
                 &amount,
             )
             .expect("deposit failed");
+        client.deposit(
+            &actors.depositor,
+            &actors.recipient,
+            &actors.arbitrator,
+            &amount,
+        );
         (env, actors, client)
     }
 

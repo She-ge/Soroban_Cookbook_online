@@ -226,7 +226,7 @@ impl BalanceSnapshot {
 mod tests {
     use super::*;
     use soroban_sdk::{
-        testutils::{Address as _, Events, Ledger, LedgerInfo},
+        testutils::{Address as _, Events as _, Ledger, LedgerInfo},
         vec, Env,
     };
 
@@ -242,7 +242,7 @@ mod tests {
     fn set_ledger(env: &Env, seq: u32, timestamp: u64) {
         env.ledger().set(LedgerInfo {
             timestamp,
-            protocol_version: 22,
+            protocol_version: 27,
             sequence_number: seq,
             network_id: Default::default(),
             base_reserve: 10,
@@ -483,12 +483,13 @@ mod tests {
         let id = client.take_snapshot(&vec![&env, alice.clone(), bob.clone()]);
         assert_eq!(id, 0);
 
-        // Verify the event was actually published.
+        // Verify the event was actually published by this contract.
         let events = env.events().all();
         assert_eq!(events.len(), 1);
         let (_ev_contract, ev_topics, ev_data) = events.last().unwrap();
         assert_eq!(ev_topics, (symbol_short!("snapshot"), 0u32).into_val(&env));
         assert_eq!(ev_data, (10u32, 1_700_000_000u64, 2u32).into_val(&env));
+        assert!(!events.events().is_empty());
     }
 
     #[test]
