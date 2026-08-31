@@ -64,6 +64,30 @@ Hash-time-locked contract for cross-party atomic swaps. Demonstrates hashlock, t
 
 Bound caller-controlled batches, amortize shared authorization and storage work, test the exact 20-operation limit, and size the guard against measured instruction and resource usage.
 
+### [Basic Escrow](/docs/patterns/escrow-basic)
+
+<span class="sb-badge sb-badge--beginner">Beginner</span> <span class="sb-tag sb-tag--utility">Utility</span> <span class="sb-badge sb-badge--stable">Stable</span>
+
+Two-party escrow holding funds until a release condition is met. The starting point before the multi-party escrow pattern.
+
+### [Timelock Vault](/docs/patterns/timelock-vault)
+
+<span class="sb-badge sb-badge--intermediate">Intermediate</span> <span class="sb-tag sb-tag--utility">Utility</span> <span class="sb-badge sb-badge--stable">Stable</span>
+
+Funds locked until a release timestamp, with tests covering early-withdrawal rejection and post-unlock release.
+
+### [Contract Factory](/docs/patterns/contract-factory)
+
+<span class="sb-badge sb-badge--advanced">Advanced</span> <span class="sb-tag sb-tag--architecture">Architecture</span> <span class="sb-badge sb-badge--stable">Stable</span>
+
+Deploy and track multiple contract instances from a single factory contract, with deterministic child addresses.
+
+### [Oracle Consumer](/docs/patterns/oracle-consumer)
+
+<span class="sb-badge sb-badge--intermediate">Intermediate</span> <span class="sb-tag sb-tag--defi">DeFi</span> <span class="sb-badge sb-badge--stable">Stable</span>
+
+Consume external price/data feeds from an oracle contract safely, including staleness checks and fallback handling.
+
 ## Pattern Categories
 
 ### 🔺 [Token Standards](/patterns/tokens)
