@@ -2,6 +2,8 @@
 name = "error-handling"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example demonstrating the contract error enum (Error) pattern for typed failures."
+keywords = ["soroban", "example", "error-handling"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

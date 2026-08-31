@@ -2,6 +2,8 @@
 name = "token-vesting"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example vesting contract that releases a token balance on a schedule."
+keywords = ["soroban", "example", "token-vesting"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

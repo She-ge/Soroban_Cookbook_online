@@ -2,6 +2,8 @@
 name = "flash-loan"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example flash-loan contract that lends liquidity with a fee and enforces repayment."
+keywords = ["soroban", "example", "flash-loan"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

@@ -2,6 +2,8 @@
 name = "access-control"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example implementing role-based access control (RBAC) with User, Manager, and Admin roles."
+keywords = ["soroban", "example", "access-control"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

@@ -2,6 +2,8 @@
 name = "balance-snapshot"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example ERC-20-style token that records point-in-time balance snapshots for historical lookups."
+keywords = ["soroban", "example", "balance-snapshot"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

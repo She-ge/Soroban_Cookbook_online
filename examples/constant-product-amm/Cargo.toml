@@ -2,6 +2,8 @@
 name = "constant-product-amm"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example constant-product AMM with add/remove liquidity and token swaps."
+keywords = ["soroban", "example", "constant-product-amm"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

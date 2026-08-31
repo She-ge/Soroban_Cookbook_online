@@ -2,6 +2,8 @@
 name = "contract-factory"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example factory contract that deploys child contract instances."
+keywords = ["soroban", "example", "contract-factory"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

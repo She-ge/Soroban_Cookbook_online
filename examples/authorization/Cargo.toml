@@ -2,6 +2,8 @@
 name = "authorization"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example showing an admin-gated privileged action with an ownership check."
+keywords = ["soroban", "example", "authorization"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]
