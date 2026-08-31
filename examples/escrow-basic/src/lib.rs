@@ -133,7 +133,13 @@ impl EscrowBasic {
 
         env.events().publish(
             (Symbol::new(&env, "initialise"),),
-            (buyer.clone(), seller.clone(), arbiter.clone(), token.clone(), amount),
+            (
+                buyer.clone(),
+                seller.clone(),
+                arbiter.clone(),
+                token.clone(),
+                amount,
+            ),
         );
 
         Ok(())
@@ -181,7 +187,8 @@ impl EscrowBasic {
             .persistent()
             .set(&DataKey::State, &EscrowState::Funded);
 
-        env.events().publish((symbol_short!("deposit"),), (buyer.clone(), amount));
+        env.events()
+            .publish((symbol_short!("deposit"),), (buyer.clone(), amount));
 
         Ok(())
     }
@@ -324,7 +331,10 @@ impl EscrowBasic {
 mod tests {
     use super::*;
     use soroban_sdk::{
-        symbol_short, testutils::Address as _, token::{self, StellarAssetClient}, Address, Env, Val,
+        symbol_short,
+        testutils::Address as _,
+        token::{self, StellarAssetClient},
+        Address, Env, Val,
     };
 
     /// Helper: register a Stellar asset contract and mint tokens to `to`.
@@ -334,7 +344,9 @@ mod tests {
         to: &Address,
         amount: i128,
     ) -> (Address, token::Client<'a>) {
-        let contract_address = env.register_stellar_asset_contract_v2(admin.clone()).address();
+        let contract_address = env
+            .register_stellar_asset_contract_v2(admin.clone())
+            .address();
         let sac = StellarAssetClient::new(env, &contract_address);
         sac.mint(to, &amount);
         let client = token::Client::new(env, &contract_address);
@@ -342,7 +354,14 @@ mod tests {
     }
 
     /// Helper: return a fully-wired escrow ready to deposit.
-    fn setup() -> (Env, Address, Address, Address, Address, EscrowBasicClient<'static>) {
+    fn setup() -> (
+        Env,
+        Address,
+        Address,
+        Address,
+        Address,
+        EscrowBasicClient<'static>,
+    ) {
         let env = Env::default();
         env.mock_all_auths();
 
@@ -525,7 +544,10 @@ mod tests {
         assert!(events.len() > before);
         let released: Vec<_> = events
             .iter()
-            .filter(|e| e.1.iter().any(|v| *v == Val::from(symbol_short!("release"))))
+            .filter(|e| {
+                e.1.iter()
+                    .any(|v| *v == Val::from(symbol_short!("release")))
+            })
             .collect();
         assert_eq!(released.len(), 1);
     }

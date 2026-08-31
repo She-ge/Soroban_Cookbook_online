@@ -1,7 +1,5 @@
 #![no_std]
-use soroban_sdk::{
-    contract, contracterror, contractimpl, contracttype, token, Address, Env,
-};
+use soroban_sdk::{contract, contracterror, contractimpl, contracttype, token, Address, Env};
 
 #[contracttype]
 #[derive(Clone, Debug)]
@@ -52,16 +50,15 @@ impl ConstantProductAmm {
             reserve_b: 0,
             lp_total_supply: 0,
         };
-        env.storage().persistent().set(&DataKey::Reserves, &reserves);
+        env.storage()
+            .persistent()
+            .set(&DataKey::Reserves, &reserves);
 
         Ok(())
     }
 
     fn get_reserves_internal(env: &Env) -> Reserves {
-        env.storage()
-            .persistent()
-            .get(&DataKey::Reserves)
-            .unwrap()
+        env.storage().persistent().get(&DataKey::Reserves).unwrap()
     }
 
     fn get_token_a(env: &Env) -> Address {
@@ -138,11 +135,7 @@ impl ConstantProductAmm {
         }
 
         let lp_amount = if reserves.lp_total_supply == 0 {
-            let sqrt = sqrt_i128(
-                amount_a
-                    .checked_mul(amount_b)
-                    .ok_or(Error::Overflow)?,
-            );
+            let sqrt = sqrt_i128(amount_a.checked_mul(amount_b).ok_or(Error::Overflow)?);
             sqrt
         } else {
             let amount_a_mul_total = amount_a
@@ -182,7 +175,9 @@ impl ConstantProductAmm {
             .checked_add(lp_amount)
             .ok_or(Error::Overflow)?;
 
-        env.storage().persistent().set(&DataKey::Reserves, &reserves);
+        env.storage()
+            .persistent()
+            .set(&DataKey::Reserves, &reserves);
 
         let caller_lp = Self::read_lp_balance(&env, &caller)
             .checked_add(lp_amount)
@@ -235,9 +230,7 @@ impl ConstantProductAmm {
             return Err(Error::InsufficientOutput);
         }
 
-        let new_caller_lp = caller_lp
-            .checked_sub(lp_amount)
-            .ok_or(Error::Overflow)?;
+        let new_caller_lp = caller_lp.checked_sub(lp_amount).ok_or(Error::Overflow)?;
         Self::set_lp_balance(&env, &caller, new_caller_lp);
 
         let new_reserves = Reserves {
@@ -282,9 +275,7 @@ impl ConstantProductAmm {
         let token_a_client = token::Client::new(&env, &token_a);
         let token_b_client = token::Client::new(&env, &token_b);
 
-        let amount_a_in_with_fee = amount_a_in
-            .checked_mul(997)
-            .ok_or(Error::Overflow)?;
+        let amount_a_in_with_fee = amount_a_in.checked_mul(997).ok_or(Error::Overflow)?;
         let numerator = amount_a_in_with_fee
             .checked_mul(reserves.reserve_b)
             .ok_or(Error::Overflow)?;
@@ -294,9 +285,7 @@ impl ConstantProductAmm {
             .ok_or(Error::Overflow)?
             .checked_add(amount_a_in_with_fee)
             .ok_or(Error::Overflow)?;
-        let amount_b_out = numerator
-            .checked_div(denominator)
-            .ok_or(Error::Overflow)?;
+        let amount_b_out = numerator.checked_div(denominator).ok_or(Error::Overflow)?;
 
         if amount_b_out < min_b_out {
             return Err(Error::InsufficientOutput);
@@ -344,9 +333,7 @@ impl ConstantProductAmm {
         let token_a_client = token::Client::new(&env, &token_a);
         let token_b_client = token::Client::new(&env, &token_b);
 
-        let amount_b_in_with_fee = amount_b_in
-            .checked_mul(997)
-            .ok_or(Error::Overflow)?;
+        let amount_b_in_with_fee = amount_b_in.checked_mul(997).ok_or(Error::Overflow)?;
         let numerator = amount_b_in_with_fee
             .checked_mul(reserves.reserve_a)
             .ok_or(Error::Overflow)?;
@@ -356,9 +343,7 @@ impl ConstantProductAmm {
             .ok_or(Error::Overflow)?
             .checked_add(amount_b_in_with_fee)
             .ok_or(Error::Overflow)?;
-        let amount_a_out = numerator
-            .checked_div(denominator)
-            .ok_or(Error::Overflow)?;
+        let amount_a_out = numerator.checked_div(denominator).ok_or(Error::Overflow)?;
 
         if amount_a_out < min_a_out {
             return Err(Error::InsufficientOutput);
@@ -487,22 +472,17 @@ mod tests {
     #[test]
     fn test_double_initialize_fails() {
         let setup = setup();
-        let result = setup
-            .client
-            .try_initialize(&setup.token_a, &setup.token_b);
+        let result = setup.client.try_initialize(&setup.token_a, &setup.token_b);
         assert_eq!(result, Err(Ok(Error::AlreadyInitialized)));
     }
 
     #[test]
     fn test_add_liquidity() {
         let setup = setup();
-        let (amount_a, amount_b, lp) = setup.client.add_liquidity(
-            &setup.alice,
-            &100_000,
-            &200_000,
-            &90_000,
-            &180_000,
-        );
+        let (amount_a, amount_b, lp) =
+            setup
+                .client
+                .add_liquidity(&setup.alice, &100_000, &200_000, &90_000, &180_000);
         assert_eq!(amount_a, 100_000);
         assert_eq!(amount_b, 200_000);
         assert!(lp > 0);
@@ -522,13 +502,9 @@ mod tests {
             .client
             .add_liquidity(&setup.alice, &100_000, &200_000, &90_000, &180_000);
 
-        let (amount_a, amount_b, lp) = setup.client.add_liquidity(
-            &setup.bob,
-            &100_000,
-            &300_000,
-            &90_000,
-            &180_000,
-        );
+        let (amount_a, amount_b, lp) = setup
+            .client
+            .add_liquidity(&setup.bob, &100_000, &300_000, &90_000, &180_000);
         assert_eq!(amount_a, 100_000);
         assert_eq!(amount_b, 200_000);
         assert!(lp > 0);
@@ -537,17 +513,12 @@ mod tests {
     #[test]
     fn test_remove_liquidity() {
         let setup = setup();
-        let (_, _, lp) = setup.client.add_liquidity(
-            &setup.alice,
-            &100_000,
-            &200_000,
-            &90_000,
-            &180_000,
-        );
+        let (_, _, lp) =
+            setup
+                .client
+                .add_liquidity(&setup.alice, &100_000, &200_000, &90_000, &180_000);
 
-        let (amount_a, amount_b) = setup
-            .client
-            .remove_liquidity(&setup.alice, &lp, &0, &0);
+        let (amount_a, amount_b) = setup.client.remove_liquidity(&setup.alice, &lp, &0, &0);
         assert!(amount_a > 0);
         assert!(amount_b > 0);
 
@@ -665,7 +636,9 @@ mod tests {
     #[test]
     fn test_add_liquidity_zero_amount_rejected() {
         let setup = setup();
-        let result = setup.client.try_add_liquidity(&setup.alice, &0, &100, &0, &0);
+        let result = setup
+            .client
+            .try_add_liquidity(&setup.alice, &0, &100, &0, &0);
         assert_eq!(result, Err(Ok(Error::InvalidAmount)));
     }
 

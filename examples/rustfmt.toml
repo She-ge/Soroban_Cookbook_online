@@ -1,0 +1,10 @@
+# rustfmt configuration for all Soroban example crates.
+#
+# These settings keep the example contracts formatted consistently so that
+# `cargo fmt --all -- --check` in CI (and locally) produces stable, reviewable
+# diffs across every crate in the workspace.
+
+edition = "2021"
+max_width = 100
+use_field_init_shorthand = true
+reorder_imports = true

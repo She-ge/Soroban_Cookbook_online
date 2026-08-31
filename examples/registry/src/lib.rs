@@ -216,7 +216,10 @@ mod tests {
 
         let n = name(&fixture.env, "");
         let addr = Address::generate(&fixture.env);
-        assert_eq!(fixture.client.try_set(&n, &addr), Err(Ok(Error::NameTooLong)));
+        assert_eq!(
+            fixture.client.try_set(&n, &addr),
+            Err(Ok(Error::NameTooLong))
+        );
     }
 
     #[test]

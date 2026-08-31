@@ -130,9 +130,7 @@ impl StreamPayment {
         }
 
         stream.withdrawn_amount += available;
-        env.storage()
-            .instance()
-            .set(&DataKey::Stream, &stream);
+        env.storage().instance().set(&DataKey::Stream, &stream);
 
         token::Client::new(&env, &stream.token).transfer(
             &env.current_contract_address(),
@@ -351,25 +349,46 @@ mod tests {
         let stream = fixture.client.stream();
 
         // Before start
-        assert_eq!(StreamPayment::withdrawable_at(&stream, START_TIME - 1).unwrap(), 0);
+        assert_eq!(
+            StreamPayment::withdrawable_at(&stream, START_TIME - 1).unwrap(),
+            0
+        );
 
         // At start
-        assert_eq!(StreamPayment::withdrawable_at(&stream, START_TIME).unwrap(), 0);
+        assert_eq!(
+            StreamPayment::withdrawable_at(&stream, START_TIME).unwrap(),
+            0
+        );
 
         // 25% through
-        assert_eq!(StreamPayment::withdrawable_at(&stream, START_TIME + 250).unwrap(), 2_500);
+        assert_eq!(
+            StreamPayment::withdrawable_at(&stream, START_TIME + 250).unwrap(),
+            2_500
+        );
 
         // 50% through
-        assert_eq!(StreamPayment::withdrawable_at(&stream, START_TIME + 500).unwrap(), 5_000);
+        assert_eq!(
+            StreamPayment::withdrawable_at(&stream, START_TIME + 500).unwrap(),
+            5_000
+        );
 
         // 75% through
-        assert_eq!(StreamPayment::withdrawable_at(&stream, START_TIME + 750).unwrap(), 7_500);
+        assert_eq!(
+            StreamPayment::withdrawable_at(&stream, START_TIME + 750).unwrap(),
+            7_500
+        );
 
         // At end
-        assert_eq!(StreamPayment::withdrawable_at(&stream, END_TIME).unwrap(), TOTAL_AMOUNT);
+        assert_eq!(
+            StreamPayment::withdrawable_at(&stream, END_TIME).unwrap(),
+            TOTAL_AMOUNT
+        );
 
         // After end
-        assert_eq!(StreamPayment::withdrawable_at(&stream, END_TIME + 100).unwrap(), TOTAL_AMOUNT);
+        assert_eq!(
+            StreamPayment::withdrawable_at(&stream, END_TIME + 100).unwrap(),
+            TOTAL_AMOUNT
+        );
     }
 
     #[test]
@@ -462,17 +481,17 @@ mod tests {
 
         // Total withdrawn should equal total amount
         assert_eq!(fixture.client.stream().withdrawn_amount, TOTAL_AMOUNT);
-        assert_eq!(token_client(&fixture).balance(&fixture.recipient), TOTAL_AMOUNT);
+        assert_eq!(
+            token_client(&fixture).balance(&fixture.recipient),
+            TOTAL_AMOUNT
+        );
     }
 
     #[test]
     fn view_functions_require_initialization() {
         let fixture = setup();
 
-        assert_eq!(
-            fixture.client.try_stream(),
-            Err(Ok(Error::NotInitialized))
-        );
+        assert_eq!(fixture.client.try_stream(), Err(Ok(Error::NotInitialized)));
         assert_eq!(
             fixture.client.try_available_amount(),
             Err(Ok(Error::NotInitialized))

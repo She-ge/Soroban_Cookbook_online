@@ -1,11 +1,11 @@
 #![cfg(test)]
 
 use soroban_sdk::{
-    contract, contractimpl, contracttype, testutils::Address as _,
-    token::TokenClient, Address, Env, Vec,
+    contract, contractimpl, contracttype, testutils::Address as _, token::TokenClient, Address,
+    Env, Vec,
 };
 
-use crate::{MultisigWallet, MultisigWalletClient, WalletError, TransferProposal};
+use crate::{MultisigWallet, MultisigWalletClient, TransferProposal, WalletError};
 
 #[contracttype]
 #[derive(Clone)]
@@ -34,7 +34,9 @@ impl TestToken {
         }
         let to_key = TestTokenDataKey::Balance(to.clone());
         let to_bal: i128 = env.storage().persistent().get(&to_key).unwrap_or(0);
-        env.storage().persistent().set(&from_key, &(from_bal - amount));
+        env.storage()
+            .persistent()
+            .set(&from_key, &(from_bal - amount));
         env.storage().persistent().set(&to_key, &(to_bal + amount));
         from_bal - amount
     }
@@ -72,11 +74,7 @@ fn setup_2of3() -> Fixture {
     let charlie = Address::generate(&env);
     let recipient = Address::generate(&env);
 
-    let signers = Vec::from_array(&env, [
-        alice.clone(),
-        bob.clone(),
-        charlie.clone(),
-    ]);
+    let signers = Vec::from_array(&env, [alice.clone(), bob.clone(), charlie.clone()]);
     wallet.initialize(&signers, &2u32);
 
     TestTokenClient::new(&env, &token_id).mint(&alice, &10_000);
@@ -184,12 +182,9 @@ fn test_unauthorized_submit() {
 
     f.wallet.deposit(&f.alice, &f.token.address, &5_000);
 
-    let result = f.wallet.try_submit_transfer(
-        &outsider,
-        &f.token.address,
-        &f.recipient,
-        &1_000,
-    );
+    let result = f
+        .wallet
+        .try_submit_transfer(&outsider, &f.token.address, &f.recipient, &1_000);
     assert_eq!(result, Err(Ok(WalletError::NotAuthorized)));
 }
 

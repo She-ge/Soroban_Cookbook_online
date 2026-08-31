@@ -27,7 +27,9 @@
 
 #![no_std]
 
-use soroban_sdk::{contract, contracterror, contractimpl, contracttype, symbol_short, Address, Env, Vec};
+use soroban_sdk::{
+    contract, contracterror, contractimpl, contracttype, symbol_short, Address, Env, Vec,
+};
 
 // ── storage keys ──────────────────────────────────────────────────────────────
 
@@ -82,9 +84,7 @@ impl BalanceSnapshot {
     pub fn mint(env: Env, to: Address, amount: i128) {
         let key = DataKey::Balance(to.clone());
         let current: i128 = env.storage().persistent().get(&key).unwrap_or(0);
-        env.storage()
-            .persistent()
-            .set(&key, &(current + amount));
+        env.storage().persistent().set(&key, &(current + amount));
     }
 
     /// Return the current balance of `of`.
@@ -96,12 +96,7 @@ impl BalanceSnapshot {
     }
 
     /// Transfer tokens from `from` to `to`.
-    pub fn transfer(
-        env: Env,
-        from: Address,
-        to: Address,
-        amount: i128,
-    ) -> Result<(), Error> {
+    pub fn transfer(env: Env, from: Address, to: Address, amount: i128) -> Result<(), Error> {
         from.require_auth();
 
         if amount <= 0 {
@@ -492,14 +487,8 @@ mod tests {
         let events = env.events().all();
         assert_eq!(events.len(), 1);
         let (_ev_contract, ev_topics, ev_data) = events.last().unwrap();
-        assert_eq!(
-            ev_topics,
-            (symbol_short!("snapshot"), 0u32).into_val(&env)
-        );
-        assert_eq!(
-            ev_data,
-            (10u32, 1_700_000_000u64, 2u32).into_val(&env)
-        );
+        assert_eq!(ev_topics, (symbol_short!("snapshot"), 0u32).into_val(&env));
+        assert_eq!(ev_data, (10u32, 1_700_000_000u64, 2u32).into_val(&env));
     }
 
     #[test]

@@ -40,7 +40,9 @@
 
 #![no_std]
 
-use soroban_sdk::{contract, contracterror, contractimpl, contracttype, symbol_short, Address, Env};
+use soroban_sdk::{
+    contract, contracterror, contractimpl, contracttype, symbol_short, Address, Env,
+};
 
 // ── storage keys ──────────────────────────────────────────────────────────────
 
@@ -145,9 +147,7 @@ impl TokenSnapshot {
 
         let key = DataKey::Balance(to.clone());
         let current: i128 = env.storage().persistent().get(&key).unwrap_or(0);
-        env.storage()
-            .persistent()
-            .set(&key, &(current + amount));
+        env.storage().persistent().set(&key, &(current + amount));
 
         Ok(())
     }
@@ -159,12 +159,7 @@ impl TokenSnapshot {
     }
 
     /// Transfer tokens from `from` to `to`.
-    pub fn transfer(
-        env: Env,
-        from: Address,
-        to: Address,
-        amount: i128,
-    ) -> Result<(), Error> {
+    pub fn transfer(env: Env, from: Address, to: Address, amount: i128) -> Result<(), Error> {
         from.require_auth();
 
         if amount <= 0 {
@@ -177,11 +172,7 @@ impl TokenSnapshot {
         Self::ensure_holder(&env, &to);
 
         let from_key = DataKey::Balance(from.clone());
-        let from_balance: i128 = env
-            .storage()
-            .persistent()
-            .get(&from_key)
-            .unwrap_or(0);
+        let from_balance: i128 = env.storage().persistent().get(&from_key).unwrap_or(0);
 
         if from_balance < amount {
             return Err(Error::InsufficientBalance);
@@ -232,11 +223,7 @@ impl TokenSnapshot {
         // Walk every known holder and persist their balance under the
         // snapshot-scoped key.
         for i in 0..holder_count {
-            let holder: Address = env
-                .storage()
-                .persistent()
-                .get(&DataKey::Holder(i))
-                .unwrap();
+            let holder: Address = env.storage().persistent().get(&DataKey::Holder(i)).unwrap();
             let bal: i128 = env
                 .storage()
                 .persistent()
@@ -244,10 +231,9 @@ impl TokenSnapshot {
                 .unwrap_or(0);
             total_supply += bal;
 
-            env.storage().persistent().set(
-                &DataKey::SnapshotBalance(snapshot_id, holder),
-                &bal,
-            );
+            env.storage()
+                .persistent()
+                .set(&DataKey::SnapshotBalance(snapshot_id, holder), &bal);
         }
 
         // Store snapshot metadata.
@@ -352,11 +338,7 @@ impl TokenSnapshot {
     ///
     /// Requires authorization from `address`.  Typically called by the
     /// downstream governance or dividend contract on behalf of the user.
-    pub fn mark_claimed(
-        env: Env,
-        address: Address,
-        snapshot_id: u32,
-    ) -> Result<(), Error> {
+    pub fn mark_claimed(env: Env, address: Address, snapshot_id: u32) -> Result<(), Error> {
         address.require_auth();
 
         if snapshot_id == 0 {
@@ -365,7 +347,12 @@ impl TokenSnapshot {
         Self::require_snapshot(&env, snapshot_id)?;
 
         let key = DataKey::SnapshotClaimed(snapshot_id, address.clone());
-        if env.storage().persistent().get::<_, bool>(&key).unwrap_or(false) {
+        if env
+            .storage()
+            .persistent()
+            .get::<_, bool>(&key)
+            .unwrap_or(false)
+        {
             return Err(Error::AlreadyClaimed);
         }
 
@@ -421,9 +408,7 @@ impl TokenSnapshot {
             .unwrap_or(0);
 
         env.storage().persistent().set(&is_key, &true);
-        env.storage()
-            .persistent()
-            .set(&DataKey::Holder(idx), addr);
+        env.storage().persistent().set(&DataKey::Holder(idx), addr);
         env.storage()
             .instance()
             .set(&INSTANCE_HOLDER_COUNTER, &(idx + 1));

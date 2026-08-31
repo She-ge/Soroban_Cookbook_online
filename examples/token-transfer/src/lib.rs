@@ -29,37 +29,36 @@ pub struct TokenTransfer;
 
 #[contractimpl]
 impl TokenTransfer {
-
     /// Initialize the token metadata.
-/// This should only be called once after deployment.
-pub fn initialize(
-    env: Env,
-    name: String,
-    symbol: String,
-    decimals: u32,
-) {
-    env.storage().persistent().set(&DataKey::Name, &name);
-    env.storage().persistent().set(&DataKey::Symbol, &symbol);
-    env.storage().persistent().set(&DataKey::Decimals, &decimals);
+    /// This should only be called once after deployment.
+    pub fn initialize(env: Env, name: String, symbol: String, decimals: u32) {
+        env.storage().persistent().set(&DataKey::Name, &name);
+        env.storage().persistent().set(&DataKey::Symbol, &symbol);
+        env.storage()
+            .persistent()
+            .set(&DataKey::Decimals, &decimals);
 
-    env.events().publish(
-        (Symbol::new(&env, "initialize"),),
-        (name.clone(), symbol.clone(), decimals),
-    );
-}
+        env.events().publish(
+            (Symbol::new(&env, "initialize"),),
+            (name.clone(), symbol.clone(), decimals),
+        );
+    }
 
     /// Mint tokens to an address (for testing purposes).
     pub fn mint(env: Env, to: Address, amount: i128) {
-    let key = DataKey::Balance(to.clone());
-    let current: i128 = env.storage().persistent().get(&key).unwrap_or(0);
-    env.storage().persistent().set(&key, &(current + amount));
+        let key = DataKey::Balance(to.clone());
+        let current: i128 = env.storage().persistent().get(&key).unwrap_or(0);
+        env.storage().persistent().set(&key, &(current + amount));
 
-    let supply_key = DataKey::TotalSupply;
-    let supply: i128 = env.storage().persistent().get(&supply_key).unwrap_or(0);
-    env.storage().persistent().set(&supply_key, &(supply + amount));
+        let supply_key = DataKey::TotalSupply;
+        let supply: i128 = env.storage().persistent().get(&supply_key).unwrap_or(0);
+        env.storage()
+            .persistent()
+            .set(&supply_key, &(supply + amount));
 
-    env.events().publish((symbol_short!("mint"), to.clone()), amount);
-}
+        env.events()
+            .publish((symbol_short!("mint"), to.clone()), amount);
+    }
 
     /// Return the balance of an address.
 
@@ -92,11 +91,13 @@ pub fn initialize(
             .persistent()
             .set(&to_key, &(to_balance + amount));
 
-        env.events().publish((symbol_short!("transfer"), from.clone(), to.clone()), amount);
+        env.events().publish(
+            (symbol_short!("transfer"), from.clone(), to.clone()),
+            amount,
+        );
 
         Ok(())
     }
-
 
     /// Burn tokens from an address, reducing total supply. Requires authorization from `from`.
     pub fn burn(env: Env, from: Address, amount: i128) -> Result<(), Error> {
@@ -119,9 +120,12 @@ pub fn initialize(
 
         let supply_key = DataKey::TotalSupply;
         let supply: i128 = env.storage().persistent().get(&supply_key).unwrap_or(0);
-        env.storage().persistent().set(&supply_key, &(supply - amount));
+        env.storage()
+            .persistent()
+            .set(&supply_key, &(supply - amount));
 
-        env.events().publish((symbol_short!("burn"), from.clone()), amount);
+        env.events()
+            .publish((symbol_short!("burn"), from.clone()), amount);
 
         Ok(())
     }
@@ -151,46 +155,45 @@ pub fn initialize(
         env.storage().persistent().get(&key).unwrap_or(0)
     }
 
-
     /// Return the balance of an address.
     pub fn balance(env: Env, of: Address) -> i128 {
         let key = DataKey::Balance(of);
         env.storage().persistent().get(&key).unwrap_or(0)
     }
 
-      /// Return the token name.
+    /// Return the token name.
     pub fn name(env: Env) -> String {
-        env.storage()
-            .persistent()
-            .get(&DataKey::Name)
-            .unwrap()
+        env.storage().persistent().get(&DataKey::Name).unwrap()
     }
 
     /// Return the token symbol.
     pub fn symbol(env: Env) -> String {
-        env.storage()
-            .persistent()
-            .get(&DataKey::Symbol)
-            .unwrap()
+        env.storage().persistent().get(&DataKey::Symbol).unwrap()
     }
 
     /// Return the number of decimals used by the token.
     pub fn decimals(env: Env) -> u32 {
-        env.storage()
-            .persistent()
-            .get(&DataKey::Decimals)
-            .unwrap()
+        env.storage().persistent().get(&DataKey::Decimals).unwrap()
     }
 
     /// Return the total supply of the token.
     pub fn total_supply(env: Env) -> i128 {
-        env.storage().persistent().get(&DataKey::TotalSupply).unwrap_or(0)
+        env.storage()
+            .persistent()
+            .get(&DataKey::TotalSupply)
+            .unwrap_or(0)
     }
 
     /// Transfer tokens from one address to another.
     /// Transfer tokens from one address to another using allowance.
     /// The caller must be approved to spend tokens on behalf of the from address.
-    pub fn transfer_from(env: Env, spender: Address, from: Address, to: Address, amount: i128) -> Result<(), Error> {
+    pub fn transfer_from(
+        env: Env,
+        spender: Address,
+        from: Address,
+        to: Address,
+        amount: i128,
+    ) -> Result<(), Error> {
         spender.require_auth();
 
         if amount <= 0 {
@@ -233,7 +236,10 @@ pub fn initialize(
             .persistent()
             .set(&to_key, &(to_balance + amount));
 
-        env.events().publish((symbol_short!("transfer"), from.clone(), to.clone()), amount);
+        env.events().publish(
+            (symbol_short!("transfer"), from.clone(), to.clone()),
+            amount,
+        );
 
         Ok(())
     }
@@ -589,7 +595,7 @@ mod tests {
         assert_eq!(client.balance(&alice), 750);
         assert_eq!(client.balance(&dave), 250);
     }
-    
+
     #[test]
     fn test_name_returns_initialized_value() {
         let (env, _, client) = setup();
@@ -600,10 +606,7 @@ mod tests {
             &7,
         );
 
-        assert_eq!(
-            client.name(),
-            String::from_str(&env, "Example Token")
-        );
+        assert_eq!(client.name(), String::from_str(&env, "Example Token"));
     }
 
     #[test]
@@ -616,10 +619,7 @@ mod tests {
             &7,
         );
 
-        assert_eq!(
-            client.symbol(),
-            String::from_str(&env, "EXT")
-        );
+        assert_eq!(client.symbol(), String::from_str(&env, "EXT"));
     }
 
     #[test]
@@ -668,7 +668,10 @@ mod tests {
         assert!(events.len() > before);
         let transferred: Vec<_> = events
             .iter()
-            .filter(|e| e.1.iter().any(|v| *v == Val::from(symbol_short!("transfer"))))
+            .filter(|e| {
+                e.1.iter()
+                    .any(|v| *v == Val::from(symbol_short!("transfer")))
+            })
             .collect();
         assert_eq!(transferred.len(), 1);
     }

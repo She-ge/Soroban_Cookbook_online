@@ -1,6 +1,8 @@
 #![no_std]
 
-use soroban_sdk::{contract, contractclient, contracterror, contractimpl, contracttype, symbol_short, Address, Env};
+use soroban_sdk::{
+    contract, contractclient, contracterror, contractimpl, contracttype, symbol_short, Address, Env,
+};
 
 // ─── Storage Keys ─────────────────────────────────────────────────────────────
 
@@ -74,12 +76,7 @@ impl ReentrancyGuardVault {
     /// Sets a mutex flag in instance storage before executing external calls.
     /// If an external contract attempts to re-enter `withdraw` or any guarded
     /// function while execution is active, `Err(Error::ReentrancyDetected)` is returned.
-    pub fn withdraw(
-        env: Env,
-        user: Address,
-        amount: i128,
-        receiver: Address,
-    ) -> Result<(), Error> {
+    pub fn withdraw(env: Env, user: Address, amount: i128, receiver: Address) -> Result<(), Error> {
         user.require_auth();
 
         if amount <= 0 {
@@ -87,7 +84,12 @@ impl ReentrancyGuardVault {
         }
 
         // 1. Mutex Check: ensure contract is not already locked
-        if env.storage().instance().get(&DataKey::Locked).unwrap_or(false) {
+        if env
+            .storage()
+            .instance()
+            .get(&DataKey::Locked)
+            .unwrap_or(false)
+        {
             return Err(Error::ReentrancyDetected);
         }
 
@@ -166,9 +168,7 @@ impl AttackerContract {
         env.storage()
             .instance()
             .set(&symbol_short!("mode"), &use_vulnerable_target);
-        env.storage()
-            .instance()
-            .set(&symbol_short!("count"), &0u32);
+        env.storage().instance().set(&symbol_short!("count"), &0u32);
     }
 
     /// Return how many times re-entry was executed.
