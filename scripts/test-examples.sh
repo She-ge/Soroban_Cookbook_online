@@ -52,7 +52,10 @@ if [ $# -gt 0 ]; then
   fi
 else
   # Collect every sub-directory that contains a Cargo.toml (i.e. every example)
-  mapfile -t EXAMPLE_DIRS < <(find "$EXAMPLES_DIR" -mindepth 1 -maxdepth 1 -type d | sort)
+  EXAMPLE_DIRS=()
+  while IFS= read -r dir; do
+    [ -n "$dir" ] && EXAMPLE_DIRS+=("$dir")
+  done < <(find "$EXAMPLES_DIR" -mindepth 1 -maxdepth 1 -type d | sort)
 fi
 
 echo ""

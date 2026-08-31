@@ -19,7 +19,7 @@ Learn how to create, build, and test your first Soroban smart contract.
 Create a new Soroban contract project:
 
 ```bash
-soroban contract init my-first-contract
+stellar contract init my-first-contract
 cd my-first-contract
 ```
 
@@ -53,7 +53,7 @@ impl HelloContract {
 Build the contract to WebAssembly:
 
 ```bash
-soroban contract build
+stellar contract build
 ```
 
 This creates a `.wasm` file in `target/wasm32-unknown-unknown/release/`
@@ -104,13 +104,13 @@ Test what you've learned about creating your first Soroban contract.
     id: "fc-q1",
     question: "What command initializes a new Soroban smart contract project?",
     options: [
-      "soroban init my-first-contract",
-      "soroban contract init my-first-contract",
+      "stellar init my-first-contract",
+      "stellar contract init my-first-contract",
       "cargo new my-first-contract",
-      "soroban new my-first-contract",
+      "stellar new my-first-contract",
     ],
     correctIndex: 1,
-    explanation: "The correct command is `soroban contract init my-first-contract`. This initializes a new Soroban project with the proper Cargo.toml, src/lib.rs, and Cargo.lock structure.",
+    explanation: "The correct command is `stellar contract init my-first-contract`. This initializes a new Soroban project with the proper Cargo.toml, src/lib.rs, and Cargo.lock structure.",
   },
   {
     id: "fc-q2",
@@ -128,7 +128,7 @@ Test what you've learned about creating your first Soroban contract.
     id: "fc-q3",
     question: "How do you run tests for your Soroban contract?",
     options: [
-      "soroban test",
+      "stellar test",
       "cargo test",
       "rustc --test src/lib.rs",
       "npm test",

@@ -14,8 +14,8 @@ Under the hood, all state-changing contract invocations use a two-phase lifecycl
 
 ## Prerequisites
 
-- Soroban CLI installed ([setup guide](/docs/getting-started/setup))
-- A funded testnet account configured in Soroban CLI
+- Stellar CLI installed ([setup guide](/docs/getting-started/setup))
+- A funded testnet account configured in Stellar CLI
 - A deployed contract ID available in your environment
 - A contract interface such as:
 
@@ -40,7 +40,7 @@ export NETWORK=testnet
 Use contract inspection to confirm the available functions and parameter names.
 
 ```bash
-soroban contract inspect \
+stellar contract inspect \
   --id "$CONTRACT_ID" \
   --network "$NETWORK"
 ```
@@ -52,7 +52,7 @@ Expected metadata output includes the contract functions and their arguments.
 Read-only functions are safe to invoke from CLI and verify the current contract state.
 
 ```bash
-soroban contract invoke \
+stellar contract invoke \
   --id "$CONTRACT_ID" \
   --source "$SOURCE_ACCOUNT" \
   --network "$NETWORK" \
@@ -70,7 +70,7 @@ Expected output:
 Write interactions modify contract state. This example increments a counter.
 
 ```bash
-soroban contract invoke \
+stellar contract invoke \
   --id "$CONTRACT_ID" \
   --source "$SOURCE_ACCOUNT" \
   --network "$NETWORK" \
@@ -88,7 +88,7 @@ Expected output:
 Call the read-only function again to confirm the update.
 
 ```bash
-soroban contract invoke \
+stellar contract invoke \
   --id "$CONTRACT_ID" \
   --source "$SOURCE_ACCOUNT" \
   --network "$NETWORK" \
@@ -103,20 +103,20 @@ Expected output:
 
 ## Argument encoding
 
-The Soroban CLI uses contract metadata to encode arguments automatically. After the function name, pass each parameter using its exact contract parameter name.
+The Stellar CLI uses contract metadata to encode arguments automatically. After the function name, pass each parameter using its exact contract parameter name.
 
 Examples:
 
 ```bash
 # Pass an integer value by name
-soroban contract invoke \
+stellar contract invoke \
   --id "$CONTRACT_ID" \
   --source "$SOURCE_ACCOUNT" \
   --network "$NETWORK" \
   -- set_count --value 42
 
 # Pass a string or symbol parameter by name
-soroban contract invoke \
+stellar contract invoke \
   --id "$CONTRACT_ID" \
   --source "$SOURCE_ACCOUNT" \
   --network "$NETWORK" \
@@ -129,7 +129,7 @@ For address values, use the public key string from the target account. If the co
 
 ### Pattern 1: Backend wrapper for contract invocation
 
-A secure app should keep signing and network credentials on the server. The frontend calls a backend endpoint, and the backend invokes the Soroban CLI or a contract API.
+A secure app should keep signing and network credentials on the server. The frontend calls a backend endpoint, and the backend invokes the Stellar CLI or a contract API.
 
 #### Node backend example
 
@@ -170,7 +170,7 @@ app.post('/api/contract/invoke', async (req, res) => {
     }
 
     const args = buildArgs(contractId, 'my-testnet-account', 'testnet', fn, params);
-    const { stdout, stderr } = await execFileAsync('soroban', args);
+    const { stdout, stderr } = await execFileAsync('stellar', args);
 
     if (stderr) {
       return res.status(500).json({ error: stderr.trim() });
@@ -236,12 +236,12 @@ const response = await fetch('/api/contract/invoke', {
 ### 1. `Account not found`
 
 - Problem: The source account is not configured or funded.
-- Fix: Verify the account exists with `soroban keys list` and fund it on testnet.
+- Fix: Verify the account exists with `stellar keys ls` and fund it on testnet (`stellar keys fund <account> --network testnet`).
 
 ### 2. `Function not found`
 
 - Problem: The function name or argument name does not match contract metadata.
-- Fix: Run `soroban contract inspect --id "$CONTRACT_ID" --network "$NETWORK"` and use the exact function and parameter names.
+- Fix: Run `stellar contract inspect --id "$CONTRACT_ID" --network "$NETWORK"` and use the exact function and parameter names.
 
 ### 3. `Argument decoding failed`
 

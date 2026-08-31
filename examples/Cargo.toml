@@ -41,6 +41,7 @@ members = [
     "upgradeable",
     "multi-token-vault",
     "multisig-wallet",
+    "pausable-token",
     "marketplace",
     "nft",
     "royalty-splitter",
