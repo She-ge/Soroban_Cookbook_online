@@ -148,6 +148,30 @@ If you need to store multiple flags or small numbers, pack them into a single `u
 - **Persistent Storage:** Best for user balances (long-lived, expensive).
 - **Temporary Storage:** Best for oracles or sequence numbers (cheap, but must be bumped).
 
+## Reference Example: Tiny Contract Benchmark
+
+The project includes a compact benchmark contract at [examples/tiny-contract](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/tree/main/examples/tiny-contract) to make bytecode-size work reproducible.
+
+It keeps the contract surface minimal while using a release profile tuned for size:
+
+```toml
+[profile.release]
+opt-level = "z"
+panic = "abort"
+strip = "symbols"
+lto = true
+codegen-units = 1
+```
+
+Use the benchmark to compare a plain release build against a post-`wasm-opt` build:
+
+```bash
+cargo build --manifest-path examples/tiny-contract/Cargo.toml --target wasm32-unknown-unknown --release
+stellar contract optimize \
+  --wasm examples/target/wasm32-unknown-unknown/release/tiny_contract.wasm \
+  --out examples/target/wasm32-unknown-unknown/release/tiny_contract.optimized.wasm
+```
+
 ## Measurable Improvements Checklist
 
 When submitting an optimization PR, include a "Before & After" table:

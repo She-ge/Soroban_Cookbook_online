@@ -47,6 +47,10 @@ Use this pattern to bootstrap a simple token system, understand state management
 
 </PatternCallout>
 
+<PatternCallout variant="note" title="Teaching Token">
+The `examples/token-transfer` example demonstrates a teaching token implementation. It is **not** the Stellar Asset Contract (SAC) used for production assets. For production, refer to the [Stellar Asset Contract (SAC)](./token-standards.mdx#sac) documentation.
+</PatternCallout>
+
 <PatternSection id="prerequisites" title="Prerequisites">
 
 - Rust stable and `cargo`
@@ -296,6 +300,7 @@ For production systems, use SAC. This pattern is ideal for learning and prototyp
 - [Error Handling](/docs/patterns/error-handling) — Taxonomy and propagation strategies
 - [Authorization](/docs/patterns/authorization) — Fine-grained access control patterns
 - [Custom Types](/docs/patterns/custom-types) — Extending data structures
+- [Token Vesting](/docs/patterns/token-vesting) — Linear release schedules with a cliff, built on the token interface
 
 </PatternSection>
 
