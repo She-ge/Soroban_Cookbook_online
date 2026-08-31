@@ -146,6 +146,8 @@ impl TokenTransfer {
         }
 
         let key = DataKey::Allowance(owner.clone(), spender.clone());
+
+        // Update the allowance in persistent storage
         env.storage().persistent().set(&key, &amount);
         let key = DataKey::Allowance(owner, spender);
         env.storage().persistent().set(&key, &AllowanceData { amount, expiration: u64::MAX });
@@ -173,6 +175,7 @@ impl TokenTransfer {
         let key = DataKey::Allowance(owner, spender);
         env.storage().persistent().set(&key, &AllowanceData { amount, expiration });
 
+        // Emit an event for the approval
         env.events().publish(
             (symbol_short!("approve"), owner, spender),
             amount,

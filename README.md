@@ -20,6 +20,12 @@ A user-friendly documentation website for the [Soroban Cookbook](https://github.
 - ✨ Interactive Code Playgrounds
 - 🔍 Smart Search
 
+## Prerequisites
+
+- **Rust:** `rustc` and `cargo` installed.
+- **Soroban SDK:** All smart contract examples in this repository are built and tested using **Soroban SDK version 27.x**.
+- **Node.js / Bun:** Required to build and run the documentation website.
+
 ## 🚀 Quick Start
 
 ```bash

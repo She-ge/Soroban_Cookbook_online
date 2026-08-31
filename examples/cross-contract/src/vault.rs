@@ -6,6 +6,7 @@
 //! - Reentrancy protection through proper state management
 //! - Fallback mechanisms for external contract failures
 
+use soroban_sdk::{contract, contracterror, contractimpl, contracttype, Address, Env, Symbol};
 use crate::token::{TokenClient, TokenError};
 use soroban_sdk::{contract, contracterror, contractimpl, contracttype, Address, Env, Symbol};
 
@@ -18,6 +19,9 @@ pub enum DataKey {
     EmergencyMode,
 }
 
+
+#[contracterror]
+#[derive(Copy, Clone, Debug, Eq, PartialEq, PartialOrd, Ord)]
 #[contracterror]
 #[derive(Copy, Clone, Debug, Eq, PartialEq)]
 #[repr(u32)]
@@ -35,6 +39,7 @@ pub enum VaultError {
     /// Invalid amount
     InvalidAmount = 6,
 }
+
 
 #[contract]
 pub struct Vault;
@@ -98,6 +103,10 @@ impl Vault {
                     (from, amount),
                 );
                 Ok(())
+            },
+            Ok(Err(_)) | Err(_) => {
+                // Revert the state change since the token transfer failed
+                env.storage().persistent().set(&DataKey::UserBalance(from), &current_balance);
             }
             Ok(Err(_token_error)) => {
                 // The token contract returned an error - revert the balance change.
@@ -159,6 +168,10 @@ impl Vault {
                     (to, amount),
                 );
                 Ok(())
+            },
+            Ok(Err(_)) | Err(_) => {
+                // Revert the balance change
+                env.storage().persistent().set(&DataKey::UserBalance(to), &current_balance);
             }
             Ok(Err(_token_error)) => {
                 // The token contract returned an error - revert the balance change.
