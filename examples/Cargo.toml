@@ -9,6 +9,7 @@ members = [
     "constructor-init",
     "contract-factory",
     "counter",
+    "custom-account",
     "cross-contract",
     "emergency-stop",
     "events-catalog",

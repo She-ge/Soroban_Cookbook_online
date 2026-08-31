@@ -33,6 +33,7 @@ Contracts build to the shared workspace target directory,
 | [`contract-factory`](contract-factory/README.md) | Contract Factory | [Contract Factory Pattern](https://soroban-cookbook.dev/docs/patterns/contract-factory) |
 | [`counter`](counter/README.md) | Counter | [Storage](https://soroban-cookbook.dev/docs/concepts/storage) |
 | [`cross-contract`](cross-contract/README.md) | Cross-Contract Invocation Example | — |
+| [`custom-account`](custom-account/README.md) | Custom Account (`__check_auth`) | [Authorization](https://soroban-cookbook.dev/docs/concepts/authorization) |
 | [`emergency-stop`](emergency-stop/README.md) | Emergency Stop (Circuit Breaker) | [Lifecycle and Upgrades](https://soroban-cookbook.dev/docs/patterns/lifecycle-upgrades) |
 | [`events-catalog`](events-catalog/README.md) | Event Catalog for Indexers | [Events](https://soroban-cookbook.dev/docs/concepts/events) |
 | [`error-handling`](error-handling/README.md) | Error Handling | [Error Handling Pattern](https://soroban-cookbook.dev/docs/patterns/error-handling) |
