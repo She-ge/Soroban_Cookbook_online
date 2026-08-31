@@ -30,3 +30,19 @@ members = [
     "multisig-wallet",
 ]
 resolver = "2"
+
+# The release profile is declared once at the workspace root so it applies to
+# every example contract. Per-package `[profile.release]` tables are silently
+# ignored by Cargo, which would otherwise fall back to the size-inefficient
+# default profile. These size-oriented settings produce small, stripped
+# binaries: `-Oz` code, debug symbols removed, and `panic = "abort"` (panicking
+# contracts are rejected on-chain, so an aborting binary is smaller and safer).
+[profile.release]
+opt-level = "z"
+overflow-checks = true
+debug = 0
+strip = "symbols"
+debug-assertions = false
+panic = "abort"
+codegen-units = 1
+lto = true
