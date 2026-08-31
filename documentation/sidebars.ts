@@ -1,3 +1,4 @@
+import type { SidebarsConfig } from '@docusaus/plugin-content-docs';
 import type { SidebarsConfig } from '@docusaurus/plugin-content-docs'; 
 /**
 import type { SidebarsConfig } from '@docusaurus/plugin-content-docs';
@@ -42,7 +43,6 @@ const sidebars: SidebarsConfig = {
         'migrations/index',
         'migrations/baseline-22-0',
         'migrations/template',
-        'contributing/offline-behavior',
       ],
     },
     {
@@ -138,6 +138,25 @@ const sidebars: SidebarsConfig = {
       label: 'Legal',
       items: [
         'legal/privacy',
+      ],
+    },
+  ],
+  contributorSidebar: [
+    {
+      type: 'category',
+      label: 'Contributor Guides',
+      items: [
+        'contributing',
+        'contributing/add-tested-example',
+        'contributing/analytics-events',
+        'contributing/versioning-strategy',
+        'contributing/accessibility-guide',
+        'contributing/image-optimization',
+        'contributing/internal-linking',
+        'contributing/mobile-performance',
+        'contributing/performance-budgets',
+        'contributing/performance-impact',
+        'contributing/offline-behavior',
       ],
     },
   ],
