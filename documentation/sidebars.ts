@@ -33,6 +33,7 @@ const sidebars: SidebarsConfig = {
         'getting-started/api-security',
         'contributing',
         'contributing/add-tested-example',
+        'contributing/soroban-test-snapshots',
         'contributing/analytics-events',
         'contributing/versioning-strategy',
       ],
