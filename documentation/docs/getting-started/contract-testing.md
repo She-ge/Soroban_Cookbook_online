@@ -467,7 +467,7 @@ fn test_with_fixture() {
 
 ## Related Topics
 
-- [Local Testing and Simulation](./local-testing-and-simulation.md) - Sandbox workflow
+- [Local Testing and Simulation](./local-testing-and-simulation.md) - Canonical local workflow
 - [Testing Error Scenarios](./testing-errors.md) - Error testing patterns
 - [Building and Compilation](./building-and-compilation.md) - Build system details
 

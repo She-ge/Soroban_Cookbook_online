@@ -42,6 +42,86 @@ For the best development experience, we recommend using [Visual Studio Code (VS 
 | [Even Better TOML](https://marketplace.visualstudio.com/items?itemName=tamasfe.even-better-toml) | Syntax highlighting for `Cargo.toml` files | Recommended |
 | [Error Lens](https://marketplace.visualstudio.com/items?itemName=usernamehw.errorlens) | Inline display of errors and warnings | Recommended |
 
+### Configuring rust-analyzer for the WASM target
+
+By default, rust-analyzer analyzes your contract against the **native host target** (e.g. `x86_64-pc-windows-msvc`). Soroban contracts compile for `wasm32-unknown-unknown` and typically build with `#![no_std]`-style constraints, so code that is perfectly valid for a WASM build can show false red squiggles, missing `soroban_sdk` completions, or spurious "unresolved import" errors in the editor.
+
+Point rust-analyzer at the WASM target to make the editor agree with the compiler.
+
+#### VS Code workspace settings
+
+Add this to `.vscode/settings.json` **in the contract project folder** (not your user settings — the target is per-project):
+
+```json
+{
+  "rust-analyzer.cargo.target": "wasm32-unknown-unknown",
+  "rust-analyzer.cfg.setTest": false
+}
+```
+
+What each setting does:
+
+| Setting | Effect |
+|---------|--------|
+| `rust-analyzer.cargo.target` | Makes rust-analyzer run `cargo metadata`/`cargo check` against `wasm32-unknown-unknown`, so the code model matches the real build. |
+| `rust-analyzer.cfg.setTest` | Defaults to `true`, which enables `cfg(test)` for local crates. Soroban tests run on the **native** target (via `cargo test`), so leaving this on while targeting WASM can produce contradictory analysis. Set it to `false` unless you rely on in-editor `#[cfg(test)]` highlighting. |
+
+After saving, run **Developer: Reload Window** (or use the rust-analyzer status-bar "Reload" action) so the server picks up the new target.
+
+#### Keeping `cargo test` on the native target
+
+`rust-analyzer.cargo.target` only affects the editor. Your own commands stay unchanged:
+
+```bash
+# Editor and builds agree on WASM
+cargo build --target wasm32-unknown-unknown --release
+
+# Tests still compile and run natively (fast feedback loop)
+cargo test
+```
+
+To make the target the default for every cargo invocation in the project (including `cargo build` without flags), pin it in `.cargo/config.toml` at the project root:
+
+```toml
+[build]
+target = "wasm32-unknown-unknown"
+```
+
+With this in place, `rust-analyzer.cargo.target` becomes redundant for cargo itself, but keeping the editor setting is still recommended so rust-analyzer and cargo can never disagree.
+
+The equivalent environment variable, useful in CI or shells:
+
+```bash
+export CARGO_BUILD_TARGET=wasm32-unknown-unknown   # Linux/macOS
+setx CARGO_BUILD_TARGET wasm32-unknown-unknown     # Windows (then reopen the shell)
+```
+
+#### Platform notes
+
+The target triple and settings are identical on all platforms; only the rustup invocation and toolchain prerequisites differ:
+
+| Platform | Install the target | Notes |
+|----------|--------------------|-------|
+| Linux | `rustup target add wasm32-unknown-unknown` | No extra linker needed for `cargo check`/rust-analyzer; WASM linking is done by rust-lld. |
+| macOS (Intel & Apple Silicon) | `rustup target add wasm32-unknown-unknown` | Same as Linux. On Apple Silicon the *host* triple is `aarch64-apple-darwin` — this does not affect the WASM target. |
+| Windows | `rustup target add wasm32-unknown-unknown` | Works with both `x86_64-pc-windows-msvc` and `gnu` host toolchains. No WASM-specific linker install is required. |
+
+Verify the target is installed:
+
+```bash
+rustup target list --installed | grep wasm32-unknown-unknown
+# or on Windows PowerShell:
+rustup target list --installed | Select-String wasm32-unknown-unknown
+```
+
+#### Verifying the fix
+
+1. Open a contract file that previously showed false errors (e.g. one using `soroban_sdk::contracttype` derives).
+2. Check the rust-analyzer output panel (**View → Output → rust-analyzer**): the `cargo metadata` invocation should include `--target wasm32-unknown-unknown`.
+3. Squiggles on valid `soroban_sdk` code should disappear; completions for SDK types should resolve.
+
+If errors persist, confirm the target is installed (table above) and that `.vscode/settings.json` lives in the **workspace root** that VS Code opened — rust-analyzer reads settings from the opened folder, not a subfolder.
+
 ## Debugging Tools
 
 When things don't work as expected, you need the right tools to identify the issue:
