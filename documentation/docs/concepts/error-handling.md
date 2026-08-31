@@ -4,6 +4,9 @@ description: Understanding error handling in Soroban smart contracts
 sidebar_position: 5
 ---
 
+> **Note:** This concept page covers the theoretical principles of error handling. For concrete implementation templates and examples, see the [Error Handling Pattern](../patterns/error-handling).
+
+
 ## Decision Tree: Panic vs Result
 
 Use this tree to choose the right error handling strategy:
