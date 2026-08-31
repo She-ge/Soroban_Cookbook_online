@@ -28,6 +28,12 @@ Minimal Soroban contract demonstrating instance storage. Perfect starting point 
 
 Complete token contract with mint, transfer, and balance functions. Learn core token mechanics and authorization patterns before advancing to standardized interfaces like SAC.
 
+### [Token Wrapper with Transfer Fee](/docs/patterns/token-wrapper)
+
+<span class="sb-badge sb-badge--intermediate">Intermediate</span> <span class="sb-tag sb-tag--token">Token</span> <span class="sb-badge sb-badge--stable">Stable</span>
+
+Minimal wrapper contract that applies a basis-point fee on transfers and routes the collected fees to a treasury address.
+
 ### [Error Handling](/docs/patterns/error-handling)
 
 **Difficulty**: Intermediate | **Category**: Architecture | **Status**: Stable
@@ -126,7 +132,7 @@ Browse the [Available Patterns](/docs/patterns/overview) to find the right patte
 
 ## Contributing
 
-Have a pattern to share? See our [Contributing Guide](https://github.com/Soroban-Cookbook/Soroban-Cookbook-/blob/main/CONTRIBUTING.md).
+Have a pattern to share? See our [Contributing Guide](https://github.com/Soroban-Cookbook/Soroban_Cookbook_online/blob/main/CONTRIBUTING.md).
 
 ## Getting Started
 
@@ -140,4 +146,4 @@ Start exploring:
 ## Resources
 
 - [Soroban Examples](https://github.com/stellar/soroban-examples)
-- [Community Patterns](https://github.com/Soroban-Cookbook/Soroban-Cookbook-)
+- [Community Patterns](https://github.com/Soroban-Cookbook)
