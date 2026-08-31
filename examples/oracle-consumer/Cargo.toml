@@ -2,6 +2,8 @@
 name = "oracle-consumer"
 version = "0.1.0"
 edition = "2021"
+description = "Soroban example contract that consumes an external price oracle with freshness checks."
+keywords = ["soroban", "example", "oracle-consumer"]
 
 [lib]
 crate-type = ["cdylib", "rlib"]

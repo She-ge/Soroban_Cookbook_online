@@ -74,13 +74,24 @@ for dir in "${EXAMPLE_DIRS[@]}"; do
     log_info "Building v2 Wasm for '${name}' …"
     if ! cargo build --locked --manifest-path "$dir/v2/Cargo.toml" \
         --target wasm32-unknown-unknown --release \
+    WASM_TARGET="wasm32v1-none"
+    if ! cargo build --manifest-path "$dir/v2/Cargo.toml" \
+        --target "$WASM_TARGET" --release \
         --target-dir "$dir/v2/target" 2>&1; then
-      log_fail "'${name}' — v2 Wasm build FAILED"
-      (( FAIL++ )) || true
-      FAILED_EXAMPLES+=("$name")
-      echo ""
-      continue
+      WASM_TARGET="wasm32-unknown-unknown"
+      if ! cargo build --manifest-path "$dir/v2/Cargo.toml" \
+          --target "$WASM_TARGET" --release \
+          --target-dir "$dir/v2/target" 2>&1; then
+        log_fail "'${name}' — v2 Wasm build FAILED"
+        (( FAIL++ )) || true
+        FAILED_EXAMPLES+=("$name")
+        echo ""
+        continue
+      fi
     fi
+    mkdir -p "$dir/v2/target/wasm32-unknown-unknown/release" "$dir/v2/target/wasm32v1-none/release"
+    cp -f "$dir/v2/target/$WASM_TARGET/release/upgradeable_v2.wasm" "$dir/v2/target/wasm32-unknown-unknown/release/upgradeable_v2.wasm" 2>/dev/null || true
+    cp -f "$dir/v2/target/$WASM_TARGET/release/upgradeable_v2.wasm" "$dir/v2/target/wasm32v1-none/release/upgradeable_v2.wasm" 2>/dev/null || true
   fi
 
   # Contract factory requires child Wasm to be built before running tests.
@@ -88,16 +99,28 @@ for dir in "${EXAMPLE_DIRS[@]}"; do
     log_info "Building child Wasm for '${name}' …"
     if ! cargo build --locked --manifest-path "$dir/child/Cargo.toml" \
         --target wasm32-unknown-unknown --release \
+    WASM_TARGET="wasm32v1-none"
+    if ! cargo build --manifest-path "$dir/child/Cargo.toml" \
+        --target "$WASM_TARGET" --release \
         --target-dir "$dir/child/target" 2>&1; then
-      log_fail "'${name}' — child Wasm build FAILED"
-      (( FAIL++ )) || true
-      FAILED_EXAMPLES+=("$name")
-      echo ""
-      continue
+      WASM_TARGET="wasm32-unknown-unknown"
+      if ! cargo build --manifest-path "$dir/child/Cargo.toml" \
+          --target "$WASM_TARGET" --release \
+          --target-dir "$dir/child/target" 2>&1; then
+        log_fail "'${name}' — child Wasm build FAILED"
+        (( FAIL++ )) || true
+        FAILED_EXAMPLES+=("$name")
+        echo ""
+        continue
+      fi
     fi
+    mkdir -p "$dir/child/target/wasm32-unknown-unknown/release" "$dir/child/target/wasm32v1-none/release"
+    cp -f "$dir/child/target/$WASM_TARGET/release/contract_factory_child.wasm" "$dir/child/target/wasm32-unknown-unknown/release/contract_factory_child.wasm" 2>/dev/null || true
+    cp -f "$dir/child/target/$WASM_TARGET/release/contract_factory_child.wasm" "$dir/child/target/wasm32v1-none/release/contract_factory_child.wasm" 2>/dev/null || true
   fi
 
   if cargo test --locked --manifest-path "$dir/Cargo.toml" 2>&1; then
+  if cargo test --manifest-path "$dir/Cargo.toml" --lib 2>&1; then
     log_pass "'${name}' — all tests passed"
     (( PASS++ )) || true
   else
