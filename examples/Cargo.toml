@@ -6,6 +6,7 @@ members = [
     "constant-product-amm",
     "contract-factory",
     "counter",
+    "custom-account",
     "emergency-stop",
     "error-handling",
     "escrow-basic",
